@@ -12,21 +12,28 @@ namespace Projekt10
 {
     public partial class MainForm : Form
     {
+        string[] Suits = { "hearts", "spades", "diamonds", "clubs" };
+        int min, max;
         public MainForm()
         {
             InitializeComponent();
+            Random random = new Random();
+            min = 2;
+            max = 14;
         }
         private void PlayWar() //implementujemy wojne tutaj
-        {
-
+        {                      //ace>king>queen>jack>10>9>8>7>6>5>4>3>2
+            Deck deck = new Deck();
+            deck.MakeDefaultDeck();
         }
 
 
         private void PlayBlackjack() //implementujemy oczko tutaj
         {
-
+            Deck deck = new Deck();
+            deck.MakeDefaultDeck();
         }
-        private void StartBtn_Click(object sender, EventArgs e) 
+        private void StartBtn_Click(object sender, EventArgs e)
         {
             //po klinkięciu "start" egzekwowane są metody zależne od opcji:
             //blackjack albo war game
@@ -34,7 +41,7 @@ namespace Projekt10
             {
                 PlayWar();
             }
-            else if(BlackjackRadioBtn.Checked)
+            else if (BlackjackRadioBtn.Checked)
             {
                 PlayBlackjack();
             }

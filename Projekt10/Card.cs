@@ -9,11 +9,10 @@ namespace Projekt10
 {
     internal class Card
     {
-
-        string Suit = ""; //figura karty
+        string Suit = "";//figura karty
         int Value = 0; // wartosc karty
-        string FaceCard = ""; //widoczna figura
-        
+        string FaceCard = ""; //widoczna wartość
+
         public Card() //konstruktor bezparametrowy
         {
             Suit = "";
@@ -25,28 +24,44 @@ namespace Projekt10
         {
             Suit = s;
             Value = v;
+
             switch (Value) //przypisanie figury w zależności od wartości
             {
                 case 11:
-                    FaceCard = "Jack";
+                    FaceCard = Suit + "jack";
                     break;
                 case 12:
-                    FaceCard = "Queen";
+                    FaceCard = Suit + "queen";
                     break;
                 case 13:
-                    FaceCard = "King";
+                    FaceCard = Suit + "king";
                     break;
                 case 14:
-                    FaceCard = "Ace";
+                    FaceCard = Suit + "ace";
                     break;
                 default:
-                    FaceCard = Value.ToString();
+                    FaceCard = Suit + Value.ToString();
                     break;
             }
         }
-        public void ChangeValue(int v) //metoda do zmiany wartości karty
-                    {
-                        Value = v;
-                    }
+        public void SetValue(int v) //metoda do zmiany wartości karty
+        {
+            Value = v;
+        }
+
+        public int GetValue() //metoda do zmiany wartości karty
+        {
+            return Value;
+        }
+
+        public void SetSuit(string s) //metoda do zmiany wartości karty
+        {
+            Suit = s;
+        }
+
+        public string GetSuit() //metoda do zmiany wartości karty
+        {
+            return Suit;
+        }
     }
 }
