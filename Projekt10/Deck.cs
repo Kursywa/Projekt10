@@ -18,6 +18,10 @@ namespace Projekt10
             CurrentDeck = new List<Card>(SizeOfDeck);
         }
 
+        public List<Card> GetDeck()
+        {
+            return CurrentDeck;
+        }
         public void MakeDefaultDeck()
         {
             Card newCard;
@@ -35,7 +39,7 @@ namespace Projekt10
             }
         }
 
-        public static void Shuffle<Card>(List<Card> deck)
+        public void Shuffle(List<Card> deck)
         {
             Random random = new Random();
 
