@@ -95,6 +95,7 @@
             DrawBtn.Text = "DRAW";
             DrawBtn.UseVisualStyleBackColor = true;
             DrawBtn.Visible = false;
+            DrawBtn.Click += DrawBtn_Click;
             // 
             // StopBtn
             // 
