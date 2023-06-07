@@ -35,8 +35,8 @@ namespace Projekt10
         {                      //ace>king>queen>jack>10>9>8>7>6>5>4>3>2
             Deck deck = new Deck();
             MainDeck = new List<Card>();
-            MainDeck = deck.GetDeck();
             deck.MakeDefaultDeck();
+            MainDeck = deck.GetDeck();
             deck.Shuffle(MainDeck);//tosujemy karty
             OpponentHand = new List<Card>(26);
             PlayerHand = new List<Card>(26);
