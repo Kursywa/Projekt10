@@ -16,6 +16,7 @@ namespace Projekt10
     {
         private WaveOutEvent outputDevice;
         private AudioFileReader audioFile;
+        private Thread musicThread;
         string[] Suits = { "hearts", "spades", "diamonds", "clubs" };
         List<Card> PlayerHand, OpponentHand, MainDeck;
         int min, max;
@@ -57,6 +58,9 @@ namespace Projekt10
         }
         private void StartBtn_Click(object sender, EventArgs e)
         {
+            musicThread = new Thread(PlayMusic);
+            musicThread.IsBackground = true;
+            musicThread.Start();
             //po klinkięciu "start" egzekwowane są metody zależne od opcji:
             //blackjack albo war game
             if (WarRadioBtn.Checked)
@@ -74,15 +78,32 @@ namespace Projekt10
             }
         }
 
-        private void DrawBtn_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void MainForm_Load(object sender, EventArgs e)
+        private void PlayMusic()
         {
             outputDevice.Init(audioFile);
             outputDevice.Play();
+
+            while (true)
+            {
+                // Tutaj umieść kod związanego z pętlą gry
+
+                // Przykład opóźnienia, aby nie obciążać procesora
+                Thread.Sleep(100);
+            }
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            base.OnFormClosing(e);
+
+            // Zatrzymaj odtwarzanie muzyki i zakończ wątek
+            outputDevice.Stop();
+            musicThread.Join();
+        }
+
+        private void DrawBtn_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
