@@ -53,10 +53,15 @@ namespace Projekt10
             //blackjack albo war game
             if (WarRadioBtn.Checked)
             {
+                DrawBtn.Hide();
+                StopBtn.Hide();
                 PlayWar();
             }
             else if (BlackjackRadioBtn.Checked)
             {
+                
+                DrawBtn.Show();
+                StopBtn.Show();
                 PlayBlackjack();
             }
         }
