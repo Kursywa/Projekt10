@@ -35,7 +35,7 @@ namespace Projekt10
             }
         }
 
-        public static void Shuffle<Card>(List<Card> deck)
+        public static void Shuffle(List<Card> deck)
         {
             Random random = new Random();
 

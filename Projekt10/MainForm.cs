@@ -26,19 +26,19 @@ namespace Projekt10
         }
         private void PlayWar() //implementujemy wojne tutaj
         {                      //ace>king>queen>jack>10>9>8>7>6>5>4>3>2
-            Deck deck = new Deck();
+/*            Deck deck = new Deck();
             deck.MakeDefaultDeck();
-            deck.Shuffle<Card>(deck);//tosujemy karty
+            Shuffle(deck);//tosujemy karty
             OpponentHand = new List<Card>(26);
             PlayerHand = new List<Card>(26);
             for (int i = 0; i < 26; i++)
             {
                 OpponentHand.Add(deck.DrawCard(deck));
                 PlayerHand.Add(deck.DrawCard(deck));
-            }
+            }*/
 
-            if()
-
+            
+            //okienko na wygraną/przegraną
         }
 
 
@@ -64,6 +64,16 @@ namespace Projekt10
                 StopBtn.Show();
                 PlayBlackjack();
             }
+            YouLose();
         }
+        private void YouWon()
+        {
+            MessageBox.Show("You Won!");
+        }
+        private void YouLose()
+        {
+            MessageBox.Show("You Lose!");
+        }
+
     }
 }
