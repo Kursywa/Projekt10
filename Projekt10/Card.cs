@@ -9,9 +9,9 @@ namespace Projekt10
 {
     internal class Card
     {
-        string Suit = "";//figura karty
-        int Value = 0; // wartosc karty
-        string FaceCard = ""; //widoczna wartość
+        static string Suit = "";//figura karty
+        static int Value = 0; // wartosc karty
+        static string FaceCard = ""; //widoczna wartość
 
         public Card() //konstruktor bezparametrowy
         {
@@ -40,7 +40,7 @@ namespace Projekt10
                     FaceCard = Suit + "ace";
                     break;
                 default:
-                    FaceCard = Suit + Value.ToString();
+                    if(v >= 2 && v <= 10)FaceCard = Suit + Value.ToString();
                     break;
             }
         }
