@@ -17,6 +17,8 @@ namespace Projekt10
         //private WaveOutEvent outputDevice;
         //private AudioFileReader audioFile;
         //private Thread musicThread;
+        private bool warRadioBtnChecked;
+        private bool blackjackRadioBtnChecked;
         string[] Suits = { "hearts", "spades", "diamonds", "clubs" };
         List<Card> PlayerHand, OpponentHand, MainDeck;
         int min, max;
@@ -27,12 +29,18 @@ namespace Projekt10
             /*outputDevice = new WaveOutEvent();
             string filePath = System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Music\\Soundtrack.mp3"); ;
             audioFile = new AudioFileReader(filePath);*/
+            warRadioBtnChecked = false;
+            blackjackRadioBtnChecked = false;
             Random random = new Random();
             min = 2;
             max = 14;
         }
         private void PlayWar() //implementujemy wojne tutaj
         {                      //ace>king>queen>jack>10>9>8>7>6>5>4>3>2
+            warRadioBtnChecked = true;
+            blackjackRadioBtnChecked = false;
+            StayBtn.Hide();
+            warReset();
             Deck deck = new Deck();
             MainDeck = new List<Card>();
             deck.MakeDefaultDeck();
@@ -50,6 +58,10 @@ namespace Projekt10
 
         private void PlayBlackjack() //implementujemy oczko tutaj
         {
+            blackjackRadioBtnChecked = true;
+            warRadioBtnChecked = false;
+            StayBtn.Show();
+            jackReset();
             Deck deck = new Deck();
             deck.MakeDefaultDeck();
         }
@@ -63,20 +75,8 @@ namespace Projekt10
             groupBox1.Hide();
             DrawBtn.Show();
             StopBtn.Show();
-
-            if (WarRadioBtn.Checked)
-            {
-                StayBtn.Hide();
-                warReset();
-                PlayWar();
-            }
-
-            if (BlackjackRadioBtn.Checked)
-            {
-                StayBtn.Show();
-                jackReset();
-                PlayBlackjack();
-            }
+            if (WarRadioBtn.Checked)PlayWar();
+            if (BlackjackRadioBtn.Checked)PlayBlackjack();
         }
 
         private void StopBtn_Click(object sender, EventArgs e)//stop the game
@@ -85,6 +85,7 @@ namespace Projekt10
             StayBtn.Hide();
             StopBtn.Hide();
             groupBox1.Show();
+            ResumeBtn.Show();
         }
         private void DrawBtn_Click(object sender, EventArgs e)
         {
@@ -104,6 +105,19 @@ namespace Projekt10
         private void warReset()//The war reset
         {
             //Show war UI
+        }
+
+        private void ResumeBtn_Click(object sender, EventArgs e)
+        {
+            groupBox1.Hide();
+            DrawBtn.Show();
+            StopBtn.Show();
+
+            if (WarRadioBtn.Checked && !warRadioBtnChecked)PlayWar();
+            else if(BlackjackRadioBtn.Checked && !blackjackRadioBtnChecked)PlayBlackjack();
+
+            if (WarRadioBtn.Checked)StayBtn.Hide();
+            else if (BlackjackRadioBtn.Checked)StayBtn.Show();
         }
 
         /*private void PlayMusic()

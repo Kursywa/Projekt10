@@ -35,6 +35,7 @@
             DrawBtn = new Button();
             StopBtn = new Button();
             StayBtn = new Button();
+            ResumeBtn = new Button();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -122,11 +123,24 @@
             StayBtn.Visible = false;
             StayBtn.Click += StayBtn_Click;
             // 
+            // ResumeBtn
+            // 
+            ResumeBtn.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            ResumeBtn.Location = new Point(627, 379);
+            ResumeBtn.Name = "ResumeBtn";
+            ResumeBtn.Size = new Size(131, 49);
+            ResumeBtn.TabIndex = 5;
+            ResumeBtn.Text = "RESUME";
+            ResumeBtn.UseVisualStyleBackColor = true;
+            ResumeBtn.Visible = false;
+            ResumeBtn.Click += ResumeBtn_Click;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(ResumeBtn);
             Controls.Add(StayBtn);
             Controls.Add(StopBtn);
             Controls.Add(DrawBtn);
@@ -147,5 +161,6 @@
         private Button DrawBtn;
         private Button StopBtn;
         private Button StayBtn;
+        private Button ResumeBtn;
     }
 }
