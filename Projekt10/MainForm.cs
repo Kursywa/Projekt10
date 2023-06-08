@@ -24,7 +24,7 @@ namespace Projekt10
         private bool DrawButtonClicked, StayButtonClicked;
         string[] Suits = { "hearts", "spades", "diamonds", "clubs" };
         List<Card> PlayerDeck, OpponentDeck, MainDeck, PlayerSide, OpponentSide;
-        int Opponentscore, Playerscore;
+        int Opponentscore, Playerscore, playerwins, opponentwins;
 
         public MainForm()
         {
@@ -105,6 +105,10 @@ namespace Projekt10
         {                            //highest card value is 11 and give it place for 6 cards max per player
             blackjackRadioBtnChecked = true;
             warRadioBtnChecked = false;
+            bool Opponentstay = false;
+            bool Playerstay = false;
+            playerwins = 0; 
+            opponentwins = 0;
             StayBtn.Show();
             jackReset();
             Deck deck = new Deck();
@@ -125,24 +129,60 @@ namespace Projekt10
 
             PlayerSide.Add(MainDeck[0]);//backfaced
             MainDeck.RemoveAt(0);
+            Playerscore += PlayerSide[PlayerSide.Count - 1].GetValue();
 
             OpponentSide.Add(MainDeck[0]);//backfaced
             MainDeck.RemoveAt(0);
+            Opponentscore += OpponentSide[OpponentSide.Count - 1].GetValue();
 
             PlayerSide.Add(MainDeck[0]);//upfaced
             MainDeck.RemoveAt(0);
+            Playerscore += PlayerSide[PlayerSide.Count - 1].GetValue();
 
             OpponentSide.Add(MainDeck[0]);//upfaced
             MainDeck.RemoveAt(0);
+            Opponentscore += OpponentSide[OpponentSide.Count - 1].GetValue();
 
             while (true)
             {
+                //opponentlabel should be ? + the rest of the upfaced cards
+                //opponentlabel should be backfaced card value + the rest of the upfaced cards
+
                 if (DrawButtonClicked)
                 {
                     DrawButtonClicked = false;
                     PlayerSide.Add(MainDeck[0]);
                     MainDeck.RemoveAt(0);
+                    Playerscore += PlayerSide[PlayerSide.Count - 1].GetValue();
+
+                    if (Opponentscore < 21)
+                    {
+                        OpponentSide.Add(MainDeck[0]);
+                        MainDeck.RemoveAt(0);
+                        Opponentscore += OpponentSide[OpponentSide.Count - 1].GetValue();
+                    }
+                    else Opponentstay = true;
                 }
+
+                if (StayButtonClicked) Playerstay = true;
+
+                if (Playerstay && Opponentstay) BlackJackComparison();
+
+                if (playerwins == 2)/*wygrywasz i break*/;
+                if (opponentwins == 2)/*przegrywasz i break*/;
+            }
+        }
+
+        private void BlackJackComparison()
+        {
+            if ((Opponentscore <= 21 && Playerscore >21) || (Opponentscore > 21 && Playerscore > 21 && Opponentscore < Playerscore) || (Opponentscore <= 21 && Playerscore <= 21 && Opponentscore > Playerscore))
+            {
+                opponentwins++;
+            }
+
+            if ((Opponentscore > 21 && Playerscore <= 21) || (Opponentscore > 21 && Playerscore > 21 && Opponentscore > Playerscore) || (Opponentscore <= 21 && Playerscore <= 21 && Opponentscore < Playerscore))
+            {
+                playerwins++;
             }
         }
 
