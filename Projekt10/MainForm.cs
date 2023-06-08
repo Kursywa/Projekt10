@@ -60,25 +60,31 @@ namespace Projekt10
             musicThread.Start();*/
             //po klinkięciu "start" egzekwowane są metody zależne od opcji:
             //blackjack albo war game
+            groupBox1.Hide();
+            DrawBtn.Show();
+            StopBtn.Show();
+
             if (WarRadioBtn.Checked)
             {
-                DrawBtn.Show();
-                StopBtn.Show();
+                StayBtn.Hide();
+                warReset();
                 PlayWar();
             }
 
             if (BlackjackRadioBtn.Checked)
             {
-                DrawBtn.Show();
                 StayBtn.Show();
-                StopBtn.Show();
+                jackReset();
                 PlayBlackjack();
             }
         }
 
         private void StopBtn_Click(object sender, EventArgs e)//stop the game
         {
-
+            DrawBtn.Hide();
+            StayBtn.Hide();
+            StopBtn.Hide();
+            groupBox1.Show();
         }
         private void DrawBtn_Click(object sender, EventArgs e)
         {
@@ -88,6 +94,16 @@ namespace Projekt10
         private void StayBtn_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void jackReset()//The blackjack reset
+        {
+            //Show blackJack UI
+        }
+
+        private void warReset()//The war reset
+        {
+            //Show war UI
         }
 
         /*private void PlayMusic()

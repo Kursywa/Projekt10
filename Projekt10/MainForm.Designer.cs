@@ -120,6 +120,7 @@
             StayBtn.Text = "STAY";
             StayBtn.UseVisualStyleBackColor = true;
             StayBtn.Visible = false;
+            StayBtn.Click += StayBtn_Click;
             // 
             // MainForm
             // 
