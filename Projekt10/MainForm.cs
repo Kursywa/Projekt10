@@ -69,11 +69,25 @@ namespace Projekt10
 
             if (BlackjackRadioBtn.Checked)
             {
-
                 DrawBtn.Show();
+                StayBtn.Show();
                 StopBtn.Show();
                 PlayBlackjack();
             }
+        }
+
+        private void StopBtn_Click(object sender, EventArgs e)//stop the game
+        {
+
+        }
+        private void DrawBtn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void StayBtn_Click(object sender, EventArgs e)
+        {
+
         }
 
         /*private void PlayMusic()
@@ -98,10 +112,5 @@ namespace Projekt10
             outputDevice.Stop();
             musicThread.Join();
         }*/
-
-        private void DrawBtn_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }

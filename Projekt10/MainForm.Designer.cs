@@ -34,6 +34,7 @@
             BlackjackRadioBtn = new RadioButton();
             DrawBtn = new Button();
             StopBtn = new Button();
+            StayBtn = new Button();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -100,7 +101,7 @@
             // StopBtn
             // 
             StopBtn.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            StopBtn.Location = new Point(627, 317);
+            StopBtn.Location = new Point(627, 379);
             StopBtn.Name = "StopBtn";
             StopBtn.Size = new Size(131, 49);
             StopBtn.TabIndex = 3;
@@ -109,11 +110,23 @@
             StopBtn.Visible = false;
             StopBtn.Click += StopBtn_Click;
             // 
+            // StayBtn
+            // 
+            StayBtn.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            StayBtn.Location = new Point(627, 312);
+            StayBtn.Name = "StayBtn";
+            StayBtn.Size = new Size(131, 48);
+            StayBtn.TabIndex = 4;
+            StayBtn.Text = "STAY";
+            StayBtn.UseVisualStyleBackColor = true;
+            StayBtn.Visible = false;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(StayBtn);
             Controls.Add(StopBtn);
             Controls.Add(DrawBtn);
             Controls.Add(groupBox1);
@@ -132,5 +145,6 @@
         private Button StartBtn;
         private Button DrawBtn;
         private Button StopBtn;
+        private Button StayBtn;
     }
 }
