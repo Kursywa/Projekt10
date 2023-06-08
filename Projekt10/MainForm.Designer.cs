@@ -107,6 +107,7 @@
             StopBtn.Text = "STOP";
             StopBtn.UseVisualStyleBackColor = true;
             StopBtn.Visible = false;
+            StopBtn.Click += StopBtn_Click;
             // 
             // MainForm
             // 

@@ -14,9 +14,9 @@ namespace Projekt10
 {
     public partial class MainForm : Form
     {
-        private WaveOutEvent outputDevice;
-        private AudioFileReader audioFile;
-        private Thread musicThread;
+        //private WaveOutEvent outputDevice;
+        //private AudioFileReader audioFile;
+        //private Thread musicThread;
         string[] Suits = { "hearts", "spades", "diamonds", "clubs" };
         List<Card> PlayerHand, OpponentHand, MainDeck;
         int min, max;
@@ -24,9 +24,9 @@ namespace Projekt10
         public MainForm()
         {
             InitializeComponent();
-            outputDevice = new WaveOutEvent();
+            /*outputDevice = new WaveOutEvent();
             string filePath = System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Music\\Soundtrack.mp3"); ;
-            audioFile = new AudioFileReader(filePath);
+            audioFile = new AudioFileReader(filePath);*/
             Random random = new Random();
             min = 2;
             max = 14;
@@ -45,9 +45,6 @@ namespace Projekt10
                 OpponentHand.Add(deck.DrawCard(MainDeck));
                 PlayerHand.Add(deck.DrawCard(MainDeck));
             }
-
-
-
         }
 
 
@@ -58,18 +55,19 @@ namespace Projekt10
         }
         private void StartBtn_Click(object sender, EventArgs e)
         {
-            musicThread = new Thread(PlayMusic);
+            /*musicThread = new Thread(PlayMusic);
             musicThread.IsBackground = true;
-            musicThread.Start();
+            musicThread.Start();*/
             //po klinkięciu "start" egzekwowane są metody zależne od opcji:
             //blackjack albo war game
             if (WarRadioBtn.Checked)
             {
-                DrawBtn.Hide();
-                StopBtn.Hide();
+                DrawBtn.Show();
+                StopBtn.Show();
                 PlayWar();
             }
-            else if (BlackjackRadioBtn.Checked)
+
+            if (BlackjackRadioBtn.Checked)
             {
 
                 DrawBtn.Show();
@@ -78,7 +76,7 @@ namespace Projekt10
             }
         }
 
-        private void PlayMusic()
+        /*private void PlayMusic()
         {
             outputDevice.Init(audioFile);
             outputDevice.Play();
@@ -90,16 +88,16 @@ namespace Projekt10
                 // Przykład opóźnienia, aby nie obciążać procesora
                 Thread.Sleep(100);
             }
-        }
+        }*/
 
-        protected override void OnFormClosing(FormClosingEventArgs e)
+        /*protected override void OnFormClosing(FormClosingEventArgs e)
         {
             base.OnFormClosing(e);
 
             // Zatrzymaj odtwarzanie muzyki i zakończ wątek
             outputDevice.Stop();
             musicThread.Join();
-        }
+        }*/
 
         private void DrawBtn_Click(object sender, EventArgs e)
         {
