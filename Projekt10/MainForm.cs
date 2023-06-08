@@ -33,7 +33,6 @@ namespace Projekt10
             audioFile = new AudioFileReader(filePath);*/
             warRadioBtnChecked = false;
             blackjackRadioBtnChecked = false;
-            warwin = false;
             blackjackwin = false;
             Random random = new Random();
             min = 2;
@@ -60,7 +59,7 @@ namespace Projekt10
                 PlayerDeck.Add(deck.DrawCard(MainDeck));
             }
 
-            while(warwin == false)
+            while(true)
             {
                 if(DrawBtn.Enabled)//nie wiem chyba
                 {
@@ -94,6 +93,9 @@ namespace Projekt10
             {
                 OpponentDeck.AddRange(OpponentSide);
             }
+
+            if(PlayerDeck.Count == 52)/*komunikat wygranej i break*/;
+            if (PlayerDeck.Count == 0)/*komunikat przegranej i break*/;
         }
 
         private void PlayBlackjack() //implementujemy oczko tutaj
@@ -105,6 +107,7 @@ namespace Projekt10
             Deck deck = new Deck();
             deck.MakeDefaultDeck();
         }
+
         private void StartBtn_Click(object sender, EventArgs e)
         {
             /*musicThread = new Thread(PlayMusic);
