@@ -49,19 +49,29 @@ namespace Projekt10
             Value = v;
         }
 
-        public int GetValue() //metoda do zmiany wartości karty
+        public int GetValue() //metoda do dostania wartości karty
         {
             return Value;
         }
 
-        public void SetSuit(string s) //metoda do zmiany wartości karty
+        public void SetSuit(string s) //metoda do zmiany znaku karty
         {
             Suit = s;
         }
 
-        public string GetSuit() //metoda do zmiany wartości karty
+        public string GetSuit() //metoda do dostania znaku karty
         {
             return Suit;
+        }
+
+        public string GetFaceCard() //metoda do dostania karty
+        {
+            return FaceCard;
+        }
+
+        public void SetFaceCard(string fc) //metoda do dostania karty
+        {
+            FaceCard = fc;
         }
     }
 }

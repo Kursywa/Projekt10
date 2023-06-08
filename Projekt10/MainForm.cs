@@ -19,6 +19,8 @@ namespace Projekt10
         //private Thread musicThread;
         private bool warRadioBtnChecked;
         private bool blackjackRadioBtnChecked;
+        private bool warwin;
+        private bool blackjackwin;
         string[] Suits = { "hearts", "spades", "diamonds", "clubs" };
         List<Card> PlayerHand, OpponentHand, MainDeck;
         int min, max;
@@ -31,6 +33,8 @@ namespace Projekt10
             audioFile = new AudioFileReader(filePath);*/
             warRadioBtnChecked = false;
             blackjackRadioBtnChecked = false;
+            warwin = false;
+            blackjackwin = false;
             Random random = new Random();
             min = 2;
             max = 14;
@@ -52,6 +56,11 @@ namespace Projekt10
             {
                 OpponentHand.Add(deck.DrawCard(MainDeck));
                 PlayerHand.Add(deck.DrawCard(MainDeck));
+            }
+
+            while(warwin == false)
+            {
+
             }
         }
 
@@ -89,12 +98,12 @@ namespace Projekt10
         }
         private void DrawBtn_Click(object sender, EventArgs e)
         {
-
+            //play the drawsound
         }
 
         private void StayBtn_Click(object sender, EventArgs e)
         {
-
+            //let the Ai have it's turn to draw or stay or just draw
         }
 
         private void jackReset()//The blackjack reset
