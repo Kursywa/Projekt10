@@ -81,7 +81,7 @@ namespace Projekt10
 
         private void StopBtn_Click(object sender, EventArgs e)//stop the game
         {
-            DrawBtn.Hide();
+            DrawBtn.Hide();//mf cant do a thing because we hide the action buttons
             StayBtn.Hide();
             StopBtn.Hide();
             groupBox1.Show();
