@@ -21,9 +21,10 @@ namespace Projekt10
         private bool blackjackRadioBtnChecked;
         private bool warwin;
         private bool blackjackwin;
+        private bool DrawButtonClicked, StayButtonClicked;
         string[] Suits = { "hearts", "spades", "diamonds", "clubs" };
         List<Card> PlayerDeck, OpponentDeck, MainDeck, PlayerSide, OpponentSide;
-        int min, max;
+        int Opponentscore, Playerscore;
 
         public MainForm()
         {
@@ -34,9 +35,10 @@ namespace Projekt10
             warRadioBtnChecked = false;
             blackjackRadioBtnChecked = false;
             blackjackwin = false;
-            Random random = new Random();
-            min = 2;
-            max = 14;
+            DrawButtonClicked = false;
+            StayButtonClicked = false;
+            Opponentscore = 0;
+            Playerscore = 0;
         }
         private void PlayWar() //implementujemy wojne tutaj
         {                      //ace>king>queen>jack>10>9>8>7>6>5>4>3>2
@@ -61,16 +63,17 @@ namespace Projekt10
 
             while(true)
             {
-                if(DrawBtn.Enabled)//nie wiem chyba
+                if(DrawButtonClicked)
                 {
+                    DrawButtonClicked = false;
                     PlayerSide.Add(PlayerDeck[0]);
                     PlayerDeck.RemoveAt(0);
 
                     //tutaj wyświetlamy kartę gracza
-                }
 
-                OpponentSide.Add(PlayerDeck[0]);
-                OpponentDeck.RemoveAt(0);
+                    OpponentSide.Add(PlayerDeck[0]);
+                    OpponentDeck.RemoveAt(0);
+                }
 
                 WarComparison(PlayerSide[PlayerSide.Count - 1], OpponentSide[OpponentSide.Count - 1]);
             }
@@ -99,13 +102,48 @@ namespace Projekt10
         }
 
         private void PlayBlackjack() //implementujemy oczko tutaj
-        {
+        {                            //highest card value is 11 and give it place for 6 cards max per player
             blackjackRadioBtnChecked = true;
             warRadioBtnChecked = false;
             StayBtn.Show();
             jackReset();
             Deck deck = new Deck();
+            MainDeck = new List<Card>();
+            OpponentSide = new List<Card>();
+            PlayerSide = new List<Card>();
             deck.MakeDefaultDeck();
+            MainDeck = deck.GetDeck();
+            deck.Shuffle(MainDeck);//tosujemy karty
+            
+            for (int i = 0; i < 56; i++)//we need to change values for the game
+            {
+                if (MainDeck[i].GetValue() == 11) MainDeck[i].SetValue(2);
+                if (MainDeck[i].GetValue() == 12) MainDeck[i].SetValue(3);
+                if (MainDeck[i].GetValue() == 13) MainDeck[i].SetValue(4);
+                if (MainDeck[i].GetValue() == 14) MainDeck[i].SetValue(11);
+            }
+
+            PlayerSide.Add(MainDeck[0]);//backfaced
+            MainDeck.RemoveAt(0);
+
+            OpponentSide.Add(MainDeck[0]);//backfaced
+            MainDeck.RemoveAt(0);
+
+            PlayerSide.Add(MainDeck[0]);//upfaced
+            MainDeck.RemoveAt(0);
+
+            OpponentSide.Add(MainDeck[0]);//upfaced
+            MainDeck.RemoveAt(0);
+
+            while (true)
+            {
+                if (DrawButtonClicked)
+                {
+                    DrawButtonClicked = false;
+                    PlayerSide.Add(MainDeck[0]);
+                    MainDeck.RemoveAt(0);
+                }
+            }
         }
 
         private void StartBtn_Click(object sender, EventArgs e)
@@ -132,12 +170,14 @@ namespace Projekt10
         }
         private void DrawBtn_Click(object sender, EventArgs e)
         {
-            //play the drawsound
+            //play the drawsound I guess
+            DrawButtonClicked = true;
         }
 
         private void StayBtn_Click(object sender, EventArgs e)
         {
             //let the Ai have it's turn to draw or stay or just draw
+            StayButtonClicked = true;
         }
 
         private void jackReset()//The blackjack reset
