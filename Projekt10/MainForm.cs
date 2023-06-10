@@ -22,6 +22,7 @@ namespace Projekt10
         private bool warwin;
         private bool blackjackwin;
         private bool DrawButtonClicked, StayButtonClicked;
+        private bool endgame = false;
         string[] Suits = { "hearts", "spades", "diamonds", "clubs" };
         List<Card> PlayerDeck, OpponentDeck, MainDeck, PlayerSide, OpponentSide;
         int Opponentscore, Playerscore, playerwins, opponentwins;
@@ -61,21 +62,25 @@ namespace Projekt10
                 PlayerDeck.Add(deck.DrawCard(MainDeck));
             }
 
-            while(true)
+            while (!endgame)            //jezeli przeniesiemy tego while do drawbtn_click to nie zawiesi sie, ale wykona tylko jeden raz
             {
-                if(DrawButtonClicked)
+                if (DrawButtonClicked)
                 {
                     DrawButtonClicked = false;
                     PlayerSide.Add(PlayerDeck[0]);
                     PlayerDeck.RemoveAt(0);
 
-                    //tutaj wyświetlamy kartę gracza
+                    Player_label.Text = PlayerDeck[0].GetSuit().ToString() + PlayerDeck[0].GetValue().ToString();//tutaj wyświetlamy kartę gracza
+                    Opponent_label.Text = OpponentDeck[0].GetSuit().ToString() + OpponentDeck[0].GetValue().ToString();
 
                     OpponentSide.Add(PlayerDeck[0]);
                     OpponentDeck.RemoveAt(0);
                 }
-
-                WarComparison(PlayerSide[PlayerSide.Count - 1], OpponentSide[OpponentSide.Count - 1]);
+                if (PlayerSide.Count > 0 && OpponentSide.Count > 0)
+                {
+                    WarComparison(PlayerSide[PlayerSide.Count - 1], OpponentSide[OpponentSide.Count - 1]);
+                }
+                // endgame = true;
             }
         }
 
@@ -88,7 +93,7 @@ namespace Projekt10
                 OpponentSide.Add(OpponentDeck[0]);
                 OpponentDeck.RemoveAt(0);
             }
-            else if (playercard.GetValue() > opponentcard.GetValue()) 
+            else if (playercard.GetValue() > opponentcard.GetValue())
             {
                 PlayerDeck.AddRange(PlayerSide);
             }
@@ -97,8 +102,16 @@ namespace Projekt10
                 OpponentDeck.AddRange(OpponentSide);
             }
 
-            if(PlayerDeck.Count == 52)/*komunikat wygranej i break*/;
-            if (PlayerDeck.Count == 0)/*komunikat przegranej i break*/;
+            if (PlayerDeck.Count == 52)/*komunikat wygranej i break*/
+            {
+                endgame = true;
+                Verdict.Text = "Wygrana";
+            }
+            if (PlayerDeck.Count == 0)/*komunikat przegranej i break*/
+            {
+                endgame = true;
+                Verdict.Text = "Przegrana";
+            }
         }
 
         private void PlayBlackjack() //implementujemy oczko tutaj
@@ -107,7 +120,7 @@ namespace Projekt10
             warRadioBtnChecked = false;
             bool Opponentstay = false;
             bool Playerstay = false;
-            playerwins = 0; 
+            playerwins = 0;
             opponentwins = 0;
             StayBtn.Show();
             jackReset();
@@ -118,7 +131,7 @@ namespace Projekt10
             deck.MakeDefaultDeck();
             MainDeck = deck.GetDeck();
             deck.Shuffle(MainDeck);//tosujemy karty
-            
+
             for (int i = 0; i < 56; i++)//we need to change values for the game
             {
                 if (MainDeck[i].GetValue() == 11) MainDeck[i].SetValue(2);
@@ -175,7 +188,7 @@ namespace Projekt10
 
         private void BlackJackComparison()
         {
-            if ((Opponentscore <= 21 && Playerscore >21) || (Opponentscore > 21 && Playerscore > 21 && Opponentscore < Playerscore) || (Opponentscore <= 21 && Playerscore <= 21 && Opponentscore > Playerscore))
+            if ((Opponentscore <= 21 && Playerscore > 21) || (Opponentscore > 21 && Playerscore > 21 && Opponentscore < Playerscore) || (Opponentscore <= 21 && Playerscore <= 21 && Opponentscore > Playerscore))
             {
                 opponentwins++;
             }
@@ -196,8 +209,8 @@ namespace Projekt10
             groupBox1.Hide();
             DrawBtn.Show();
             StopBtn.Show();
-            if (WarRadioBtn.Checked)PlayWar();
-            if (BlackjackRadioBtn.Checked)PlayBlackjack();
+            if (WarRadioBtn.Checked) PlayWar();
+            if (BlackjackRadioBtn.Checked) PlayBlackjack();
         }
 
         private void StopBtn_Click(object sender, EventArgs e)//stop the game
@@ -236,11 +249,16 @@ namespace Projekt10
             DrawBtn.Show();
             StopBtn.Show();
 
-            if (WarRadioBtn.Checked && !warRadioBtnChecked)PlayWar();
-            else if(BlackjackRadioBtn.Checked && !blackjackRadioBtnChecked)PlayBlackjack();
+            if (WarRadioBtn.Checked && !warRadioBtnChecked) PlayWar();
+            else if (BlackjackRadioBtn.Checked && !blackjackRadioBtnChecked) PlayBlackjack();
 
-            if (WarRadioBtn.Checked)StayBtn.Hide();
-            else if (BlackjackRadioBtn.Checked)StayBtn.Show();
+            if (WarRadioBtn.Checked) StayBtn.Hide();
+            else if (BlackjackRadioBtn.Checked) StayBtn.Show();
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
         }
 
         /*private void PlayMusic()
