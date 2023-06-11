@@ -34,6 +34,11 @@
             BlackjackRadioBtn = new RadioButton();
             DrawBtn = new Button();
             StopBtn = new Button();
+            StayBtn = new Button();
+            ResumeBtn = new Button();
+            Opponent_label = new Label();
+            Player_label = new Label();
+            Verdict = new Label();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -100,27 +105,86 @@
             // StopBtn
             // 
             StopBtn.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            StopBtn.Location = new Point(627, 317);
+            StopBtn.Location = new Point(627, 379);
             StopBtn.Name = "StopBtn";
             StopBtn.Size = new Size(131, 49);
             StopBtn.TabIndex = 3;
             StopBtn.Text = "STOP";
             StopBtn.UseVisualStyleBackColor = true;
             StopBtn.Visible = false;
+            StopBtn.Click += StopBtn_Click;
+            // 
+            // StayBtn
+            // 
+            StayBtn.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            StayBtn.Location = new Point(627, 312);
+            StayBtn.Name = "StayBtn";
+            StayBtn.Size = new Size(131, 48);
+            StayBtn.TabIndex = 4;
+            StayBtn.Text = "STAY";
+            StayBtn.UseVisualStyleBackColor = true;
+            StayBtn.Visible = false;
+            StayBtn.Click += StayBtn_Click;
+            // 
+            // ResumeBtn
+            // 
+            ResumeBtn.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            ResumeBtn.Location = new Point(627, 379);
+            ResumeBtn.Name = "ResumeBtn";
+            ResumeBtn.Size = new Size(131, 49);
+            ResumeBtn.TabIndex = 5;
+            ResumeBtn.Text = "RESUME";
+            ResumeBtn.UseVisualStyleBackColor = true;
+            ResumeBtn.Visible = false;
+            ResumeBtn.Click += ResumeBtn_Click;
+            // 
+            // Opponent_label
+            // 
+            Opponent_label.AutoSize = true;
+            Opponent_label.Location = new Point(259, 99);
+            Opponent_label.Name = "Opponent_label";
+            Opponent_label.Size = new Size(115, 20);
+            Opponent_label.TabIndex = 6;
+            Opponent_label.Text = "Opponent_label";
+            // 
+            // Player_label
+            // 
+            Player_label.AutoSize = true;
+            Player_label.Location = new Point(259, 226);
+            Player_label.Name = "Player_label";
+            Player_label.Size = new Size(88, 20);
+            Player_label.TabIndex = 7;
+            Player_label.Text = "Player_label";
+            // 
+            // Verdict
+            // 
+            Verdict.AutoSize = true;
+            Verdict.Location = new Point(61, 162);
+            Verdict.Name = "Verdict";
+            Verdict.Size = new Size(63, 20);
+            Verdict.TabIndex = 8;
+            Verdict.Text = "Werdykt";
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(Verdict);
+            Controls.Add(Player_label);
+            Controls.Add(Opponent_label);
+            Controls.Add(ResumeBtn);
+            Controls.Add(StayBtn);
             Controls.Add(StopBtn);
             Controls.Add(DrawBtn);
             Controls.Add(groupBox1);
             Name = "MainForm";
             Text = "MainForm";
+            Load += MainForm_Load;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -131,5 +195,10 @@
         private Button StartBtn;
         private Button DrawBtn;
         private Button StopBtn;
+        private Button StayBtn;
+        private Button ResumeBtn;
+        private Label Opponent_label;
+        private Label Player_label;
+        private Label Verdict;
     }
 }

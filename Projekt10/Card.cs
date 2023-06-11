@@ -9,9 +9,9 @@ namespace Projekt10
 {
     internal class Card
     {
-        string Suit = "";//figura karty
-        int Value = 0; // wartosc karty
-        string FaceCard = ""; //widoczna wartość
+        static string Suit = "";//figura karty
+        static int Value = 0; // wartosc karty
+        static string FaceCard = ""; //widoczna wartość
 
         public Card() //konstruktor bezparametrowy
         {
@@ -40,7 +40,7 @@ namespace Projekt10
                     FaceCard = Suit + "ace";
                     break;
                 default:
-                    FaceCard = Suit + Value.ToString();
+                    if(v >= 2 && v <= 10)FaceCard = Suit + Value.ToString();
                     break;
             }
         }
@@ -49,19 +49,29 @@ namespace Projekt10
             Value = v;
         }
 
-        public int GetValue() //metoda do zmiany wartości karty
+        public int GetValue() //metoda do dostania wartości karty
         {
             return Value;
         }
 
-        public void SetSuit(string s) //metoda do zmiany wartości karty
+        public void SetSuit(string s) //metoda do zmiany znaku karty
         {
             Suit = s;
         }
 
-        public string GetSuit() //metoda do zmiany wartości karty
+        public string GetSuit() //metoda do dostania znaku karty
         {
             return Suit;
+        }
+
+        public string GetFaceCard() //metoda do dostania karty
+        {
+            return FaceCard;
+        }
+
+        public void SetFaceCard(string fc) //metoda do dostania karty
+        {
+            FaceCard = fc;
         }
     }
 }

@@ -9,8 +9,8 @@ namespace Projekt10
 {
     internal class Deck
     {
-        List<Card> CurrentDeck;
-        int SizeOfDeck;
+        static List<Card> CurrentDeck;
+        static int SizeOfDeck;
 
         public Deck() //konstruktor tworzący standardową talię 52 kart
         {
