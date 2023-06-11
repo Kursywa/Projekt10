@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using NAudio.Wave;
 using System.IO;
+using Projekt10.Properties;
 
 namespace Projekt10
 {
@@ -17,8 +18,6 @@ namespace Projekt10
         //private WaveOutEvent outputDevice;
         //private AudioFileReader audioFile;
         //private Thread musicThread;
-        private bool warRadioBtnChecked;
-        private bool blackjackRadioBtnChecked;
         private bool warwin;
         private bool blackjackwin;
         private bool DrawButtonClicked, StayButtonClicked;
@@ -33,8 +32,6 @@ namespace Projekt10
             /*outputDevice = new WaveOutEvent();
             string filePath = System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Music\\Soundtrack.mp3"); ;
             audioFile = new AudioFileReader(filePath);*/
-            warRadioBtnChecked = false;
-            blackjackRadioBtnChecked = false;
             blackjackwin = false;
             DrawButtonClicked = false;
             StayButtonClicked = false;
@@ -43,8 +40,6 @@ namespace Projekt10
         }
         private void PlayWar() //implementujemy wojne tutaj
         {                      //ace>king>queen>jack>10>9>8>7>6>5>4>3>2
-            warRadioBtnChecked = true;
-            blackjackRadioBtnChecked = false;
             StayBtn.Hide();
             warReset();
             Deck deck = new Deck();
@@ -56,12 +51,13 @@ namespace Projekt10
             deck.Shuffle(MainDeck);//tosujemy karty
             OpponentDeck = new List<Card>(26);
             PlayerDeck = new List<Card>(26);
-            for (int i = 0; i < 26; i++)
+
+            for (int i = 0; i < 26; i++) //rozdzielenie kart miedzy graczami
             {
                 OpponentDeck.Add(deck.DrawCard(MainDeck));
                 PlayerDeck.Add(deck.DrawCard(MainDeck));
             }
-
+            
             while (!endgame)            //jezeli przeniesiemy tego while do drawbtn_click to nie zawiesi sie, ale wykona tylko jeden raz
             {
                 if (DrawButtonClicked)
@@ -69,13 +65,15 @@ namespace Projekt10
                     DrawButtonClicked = false;
                     PlayerSide.Add(PlayerDeck[0]);
                     PlayerDeck.RemoveAt(0);
-
+                    //dla amtiego
                     Player_label.Text = PlayerDeck[0].GetSuit().ToString() + PlayerDeck[0].GetValue().ToString();//tutaj wyświetlamy kartę gracza
                     Opponent_label.Text = OpponentDeck[0].GetSuit().ToString() + OpponentDeck[0].GetValue().ToString();
 
                     OpponentSide.Add(PlayerDeck[0]);
                     OpponentDeck.RemoveAt(0);
                 }
+                SetCard(PlayerSide, PlayerCard);
+            SetCard(OpponentSide, OpponentCard);
                 if (PlayerSide.Count > 0 && OpponentSide.Count > 0)
                 {
                     WarComparison(PlayerSide[PlayerSide.Count - 1], OpponentSide[OpponentSide.Count - 1]);
@@ -116,12 +114,10 @@ namespace Projekt10
 
         private void PlayBlackjack() //implementujemy oczko tutaj
         {                            //highest card value is 11 and give it place for 6 cards max per player
-            blackjackRadioBtnChecked = true;
-            warRadioBtnChecked = false;
             bool Opponentstay = false;
             bool Playerstay = false;
             playerwins = 0;
-            opponentwins = 0;
+            opponentwins = 0; //po co to?
             StayBtn.Show();
             jackReset();
             Deck deck = new Deck();
@@ -249,8 +245,8 @@ namespace Projekt10
             DrawBtn.Show();
             StopBtn.Show();
 
-            if (WarRadioBtn.Checked && !warRadioBtnChecked) PlayWar();
-            else if (BlackjackRadioBtn.Checked && !blackjackRadioBtnChecked) PlayBlackjack();
+            if (WarRadioBtn.Checked) PlayWar();
+            else if (BlackjackRadioBtn.Checked) PlayBlackjack();
 
             if (WarRadioBtn.Checked) StayBtn.Hide();
             else if (BlackjackRadioBtn.Checked) StayBtn.Show();
@@ -261,6 +257,19 @@ namespace Projekt10
 
         }
 
+        public void AppendCard()
+        {
+
+        }
+        private void SetCard(List<Card> card, System.Windows.Forms.PictureBox picturebox) 
+        { //metoda ustawiająca picturebox na odpowiednie zdjecie z repozytorium
+            //input (OpponentSide lub PlayerSide, OpponentCard lub PlayerCard) kolejno
+            Card analyzedCard = card[card.Count - 1]; //przypisanie pierwszej karty z reki
+            string FaceCard = analyzedCard.GetFaceCard();
+            //switch case bhy przydzielic karcie odpowiedni obrazek
+            var ImageName = analyzedCard.GetFaceCard().ToString();
+            picturebox.Image = (Image)Properties.Resources.ResourceManager.GetObject(ImageName);
+        }
         /*private void PlayMusic()
         {
             outputDevice.Init(audioFile);
