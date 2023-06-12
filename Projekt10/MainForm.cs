@@ -52,33 +52,46 @@ namespace Projekt10
             OpponentDeck = new List<Card>(26);
             PlayerDeck = new List<Card>(26);
 
+
             for (int i = 0; i < 26; i++) //rozdzielenie kart miedzy graczami
             {
                 OpponentDeck.Add(deck.DrawCard(MainDeck));
                 PlayerDeck.Add(deck.DrawCard(MainDeck));
             }
-            
+
             while (!endgame)            //jezeli przeniesiemy tego while do drawbtn_click to nie zawiesi sie, ale wykona tylko jeden raz
             {
                 if (DrawButtonClicked)
                 {
                     DrawButtonClicked = false;
-                    PlayerSide.Add(PlayerDeck[0]);
-                    PlayerDeck.RemoveAt(0);
-                    //dla amtiego
-                    Player_label.Text = PlayerDeck[0].GetSuit().ToString() + PlayerDeck[0].GetValue().ToString();//tutaj wyświetlamy kartę gracza
-                    Opponent_label.Text = OpponentDeck[0].GetSuit().ToString() + OpponentDeck[0].GetValue().ToString();
+                    if (PlayerDeck.Count > 0)//danie graczowi karty
+                    {
+                        Card drawnCard = PlayerDeck[0];
+                        PlayerDeck.RemoveAt(0);
+                        PlayerSide.Add(drawnCard);
 
-                    OpponentSide.Add(PlayerDeck[0]);
-                    OpponentDeck.RemoveAt(0);
+                        // Instrukcje dotyczące wyświetlania karty gracza
+                        Player_label.Text = drawnCard.GetSuit().ToString() + drawnCard.GetValue().ToString();
+                    }
+
+                    if (OpponentDeck.Count > 0)//danie przeciwnikowi karty
+                    {
+                        Card opponentCard = OpponentDeck[0];
+                        OpponentDeck.RemoveAt(0);
+                        OpponentSide.Add(opponentCard);
+
+                        // Instrukcje dotyczące wyświetlania karty przeciwnika
+                        Opponent_label.Text = opponentCard.GetSuit().ToString() + opponentCard.GetValue().ToString();
+                    }
+
+                    SetCard(PlayerSide, PlayerCard);
+                    SetCard(OpponentSide, OpponentCard);
                 }
-                SetCard(PlayerSide, PlayerCard);
-            SetCard(OpponentSide, OpponentCard);
+
                 if (PlayerSide.Count > 0 && OpponentSide.Count > 0)
                 {
                     WarComparison(PlayerSide[PlayerSide.Count - 1], OpponentSide[OpponentSide.Count - 1]);
                 }
-                // endgame = true;
             }
         }
 
@@ -117,7 +130,7 @@ namespace Projekt10
             bool Opponentstay = false;
             bool Playerstay = false;
             playerwins = 0;
-            opponentwins = 0; //po co to?
+            opponentwins = 0; //po co to?żeby użytkownik też mógł przegrać
             StayBtn.Show();
             jackReset();
             Deck deck = new Deck();
@@ -205,6 +218,8 @@ namespace Projekt10
             groupBox1.Hide();
             DrawBtn.Show();
             StopBtn.Show();
+            //BackgroundpictureBox.Show();
+            //BackgroundpictureBox.Image = (Image)Properties.Resources.ResourceManager.GetObject("background.jpg");
             if (WarRadioBtn.Checked) PlayWar();
             if (BlackjackRadioBtn.Checked) PlayBlackjack();
         }
@@ -261,7 +276,7 @@ namespace Projekt10
         {
 
         }
-        private void SetCard(List<Card> card, System.Windows.Forms.PictureBox picturebox) 
+        private void SetCard(List<Card> card, System.Windows.Forms.PictureBox picturebox)
         { //metoda ustawiająca picturebox na odpowiednie zdjecie z repozytorium
             //input (OpponentSide lub PlayerSide, OpponentCard lub PlayerCard) kolejno
             Card analyzedCard = card[card.Count - 1]; //przypisanie pierwszej karty z reki

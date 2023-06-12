@@ -44,11 +44,13 @@
             ScoreLabel = new Label();
             OpponentCard = new PictureBox();
             PlayerCard = new PictureBox();
+            BackgroundpictureBox = new PictureBox();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)OpponentDeckPictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PlayerDeckPictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)OpponentCard).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PlayerCard).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)BackgroundpictureBox).BeginInit();
             SuspendLayout();
             // 
             // WarRadioBtn
@@ -237,6 +239,15 @@
             PlayerCard.TabIndex = 13;
             PlayerCard.TabStop = false;
             // 
+            // BackgroundpictureBox
+            // 
+            BackgroundpictureBox.Location = new Point(12, 9);
+            BackgroundpictureBox.Name = "BackgroundpictureBox";
+            BackgroundpictureBox.Size = new Size(511, 317);
+            BackgroundpictureBox.TabIndex = 14;
+            BackgroundpictureBox.TabStop = false;
+            BackgroundpictureBox.Visible = false;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -255,6 +266,7 @@
             Controls.Add(StopBtn);
             Controls.Add(DrawBtn);
             Controls.Add(groupBox1);
+            Controls.Add(BackgroundpictureBox);
             Margin = new Padding(3, 2, 3, 2);
             Name = "MainForm";
             Text = "MainForm";
@@ -265,6 +277,7 @@
             ((System.ComponentModel.ISupportInitialize)PlayerDeckPictureBox).EndInit();
             ((System.ComponentModel.ISupportInitialize)OpponentCard).EndInit();
             ((System.ComponentModel.ISupportInitialize)PlayerCard).EndInit();
+            ((System.ComponentModel.ISupportInitialize)BackgroundpictureBox).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -287,5 +300,6 @@
         private Label ScoreLabel;
         private PictureBox OpponentCard;
         private PictureBox PlayerCard;
+        private PictureBox BackgroundpictureBox;
     }
 }

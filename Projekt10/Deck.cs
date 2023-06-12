@@ -20,7 +20,7 @@ namespace Projekt10
 
         public List<Card> GetDeck()
         {
-            return CurrentDeck;
+            return CurrentDeck.ToList();
         }
         public void MakeDefaultDeck()
         {
