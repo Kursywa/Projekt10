@@ -45,6 +45,7 @@
             OpponentCard = new PictureBox();
             PlayerCard = new PictureBox();
             BackgroundpictureBox = new PictureBox();
+            testlabel = new Label();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)OpponentDeckPictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PlayerDeckPictureBox).BeginInit();
@@ -248,11 +249,22 @@
             BackgroundpictureBox.TabStop = false;
             BackgroundpictureBox.Visible = false;
             // 
+            // testlabel
+            // 
+            testlabel.AutoSize = true;
+            testlabel.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            testlabel.Location = new Point(324, 159);
+            testlabel.Name = "testlabel";
+            testlabel.Size = new Size(52, 21);
+            testlabel.TabIndex = 15;
+            testlabel.Text = "label1";
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(700, 338);
+            Controls.Add(testlabel);
             Controls.Add(PlayerCard);
             Controls.Add(OpponentCard);
             Controls.Add(ScoreLabel);
@@ -301,5 +313,6 @@
         private PictureBox OpponentCard;
         private PictureBox PlayerCard;
         private PictureBox BackgroundpictureBox;
+        private Label testlabel;
     }
 }

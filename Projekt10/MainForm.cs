@@ -210,14 +210,13 @@ namespace Projekt10
 
         private void StartBtn_Click(object sender, EventArgs e)
         {
-            /*musicThread = new Thread(PlayMusic);
-            musicThread.IsBackground = true;
-            musicThread.Start();*/
             //po klinkięciu "start" egzekwowane są metody zależne od opcji:
             //blackjack albo war game
             groupBox1.Hide();
+            testlabel.Text = "start nacisniety";
             DrawBtn.Show();
             StopBtn.Show();
+            testlabel.Text = "start nacisniety";
             //BackgroundpictureBox.Show();
             //BackgroundpictureBox.Image = (Image)Properties.Resources.ResourceManager.GetObject("background.jpg");
             if (WarRadioBtn.Checked) PlayWar();
@@ -285,27 +284,6 @@ namespace Projekt10
             var ImageName = analyzedCard.GetFaceCard().ToString();
             picturebox.Image = (Image)Properties.Resources.ResourceManager.GetObject(ImageName);
         }
-        /*private void PlayMusic()
-        {
-            outputDevice.Init(audioFile);
-            outputDevice.Play();
-
-            while (true)
-            {
-                // Tutaj umieść kod związanego z pętlą gry
-
-                // Przykład opóźnienia, aby nie obciążać procesora
-                Thread.Sleep(100);
-            }
-        }*/
-
-        /*protected override void OnFormClosing(FormClosingEventArgs e)
-        {
-            base.OnFormClosing(e);
-
-            // Zatrzymaj odtwarzanie muzyki i zakończ wątek
-            outputDevice.Stop();
-            musicThread.Join();
-        }*/
+        
     }
 }
