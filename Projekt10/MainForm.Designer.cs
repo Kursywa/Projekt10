@@ -133,7 +133,7 @@
             PassBtn.Text = "PASS";
             PassBtn.UseVisualStyleBackColor = true;
             PassBtn.Visible = false;
-            PassBtn.Click += StayBtn_Click;
+            PassBtn.Click += PassBtn_Click;
             // 
             // Opponent_label
             // 
