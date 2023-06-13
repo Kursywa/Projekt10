@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,67 +10,61 @@ namespace Projekt10
 {
     internal class Card
     {
-        static string Suit = "";//figura karty
-        static int Value = 0; // wartosc karty
-        static string FaceCard = ""; //widoczna wartość
+        private string Suit;
+        private int Value;
+        private string FaceCard;
 
-        public Card() //konstruktor bezparametrowy
-        {
-            Suit = "";
-            Value = 0;
-            FaceCard = "";
-        }
-
-        public Card(string s, int v) //konstruktor z konkretnymi wartościami
+        public Card(string s, int v)
         {
             Suit = s;
             Value = v;
 
-            switch (Value) //przypisanie figury w zależności od wartości
+            switch (v)
             {
                 case 11:
-                    FaceCard = Suit + "jack";
+                    FaceCard = s + "jack";
                     break;
                 case 12:
-                    FaceCard = Suit + "queen";
+                    FaceCard = s + "queen";
                     break;
                 case 13:
-                    FaceCard = Suit + "king";
+                    FaceCard = s + "king";
                     break;
                 case 14:
-                    FaceCard = Suit + "ace";
+                    FaceCard = s + "ace";
                     break;
                 default:
-                    if(v >= 2 && v <= 10)FaceCard = Suit + Value.ToString();
+                    FaceCard = s + v.ToString();
                     break;
             }
         }
-        public void SetValue(int v) //metoda do zmiany wartości karty
+   
+        public void SetValue(int v)
         {
             Value = v;
         }
 
-        public int GetValue() //metoda do dostania wartości karty
+        public int GetValue()
         {
             return Value;
         }
 
-        public void SetSuit(string s) //metoda do zmiany znaku karty
+        public void SetSuit(string s)
         {
             Suit = s;
         }
 
-        public string GetSuit() //metoda do dostania znaku karty
+        public string GetSuit()
         {
             return Suit;
         }
 
-        public string GetFaceCard() //metoda do dostania karty
+        public string GetFaceCard()
         {
             return FaceCard;
         }
 
-        public void SetFaceCard(string fc) //metoda do dostania karty
+        public void SetFaceCard(string fc)
         {
             FaceCard = fc;
         }
