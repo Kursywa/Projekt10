@@ -31,6 +31,8 @@ namespace Projekt10
         List<Card> PlayerDeck = new List<Card>();
         List<Card> PlayerHand = new List<Card>();
         List<Card> MainDeck = new List<Card>();
+        bool OpponentPass = false;
+        bool PlayerPass = false;
         public MainForm()
         {
             InitializeComponent();
@@ -41,16 +43,13 @@ namespace Projekt10
         }
         private void InitializeWar() //implementujemy wojne tutaj
         {                      //ace>king>queen>jack>10>9>8>7>6>5>4>3>2
-            StayBtn.Hide();
+            PassBtn.Hide();
             Deck deck = new Deck();
             MainDeck = new List<Card>();
             deck.MakeDefaultDeck();
             MainDeck = deck.GetDeck();
             deck.Shuffle(MainDeck);//tosujemy karty
-            OpponentDeck = new List<Card>();
-            PlayerDeck = new List<Card>();
-            OpponentHand = new List<Card>();
-            PlayerHand = new List<Card>();
+
 
 
             for (int i = 0; i < 26; i++) //rozdzielenie kart miedzy graczami
@@ -94,18 +93,14 @@ namespace Projekt10
             }
         }
 
-        private void PlayBlackjack() //implementujemy oczko tutaj
+        private void InitilizeBlackjack() //implementujemy oczko tutaj
         {                            //highest card value is 11 and give it place for 6 cards max per player
-            bool Opponentstay = false;
-            bool Playerstay = false;
-            StayBtn.Show();
             Deck deck = new Deck();
             MainDeck = new List<Card>();
-            /*OpponentSide = new List<Card>();
-            PlayerSide = new List<Card>();*/
             deck.MakeDefaultDeck();
             MainDeck = deck.GetDeck();
             deck.Shuffle(MainDeck);//tosujemy karty
+            PassBtn.Show();
             //trzeba zrobić foreachem
             foreach (var Deck in MainDeck)
             {
@@ -125,6 +120,26 @@ namespace Projekt10
                         break;
                 }
             }
+        }
+        private void PlayBlackjack() 
+        {
+            //metoda na dobieranie do ręki
+            //dobierz z decku ooponenta
+
+            PlayerHand.Add(Deck.DrawCard(MainDeck)); //dobierz z decku gracza
+            Playerscore = PlayerHand.Sum(obj => obj.GetValue());
+            //zliczenie wyniku (przenieść do odzielnej funkcji  zależności od gry
+            if (Playerscore > Opponentscore && Opponentscore < 18)
+            {
+                OpponentHand.Add(Deck.DrawCard(MainDeck));
+                Opponentscore = OpponentHand.Sum(obj => obj.GetValue());
+            }
+            else
+            {
+                OpponentPass = true;
+            }
+
+            ActualizeLabels();
             /*for (int i = 0; i < 56; i++)//we need to change values for the game
             {
                 if (MainDeck[i].GetValue() == 11) MainDeck[i].SetValue(2);
@@ -151,33 +166,12 @@ namespace Projekt10
                         MainDeck.RemoveAt(0);
                         Opponentscore += OpponentSide[OpponentSide.Count - 1].GetValue();
             */
-            while (true)
-            {
-                //opponentlabel should be ? + the rest of the upfaced cards
-                //opponentlabel should be backfaced card value + the rest of the upfaced cards
+        
 
-                /*if (DrawButtonClicked)
-                {
-                    DrawButtonClicked = false;
-                    PlayerSide.Add(MainDeck[0]);
-                    MainDeck.RemoveAt(0);
-                    Playerscore += PlayerSide[PlayerSide.Count - 1].GetValue();
+                if (PlayerPass && OpponentPass) BlackJackComparison();
 
-                    if (Opponentscore < 21)
-                    {
-                        OpponentSide.Add(MainDeck[0]);
-                        MainDeck.RemoveAt(0);
-                        Opponentscore += OpponentSide[OpponentSide.Count - 1].GetValue();
-                    }
-                    else Opponentstay = true;
-                }*/
-
-                if (StayButtonClicked) Playerstay = true;
-
-                if (Playerstay && Opponentstay) BlackJackComparison();
-
-            }
         }
+        
 
         private void BlackJackComparison()
         {
@@ -199,8 +193,9 @@ namespace Projekt10
 
             //groupBox1.Hide();
             DrawBtn.Show();
+            StopBtn.Show();
+            if (BlackjackRadioBtn.Checked) InitilizeBlackjack();
             if (WarRadioBtn.Checked) InitializeWar();
-            if (BlackjackRadioBtn.Checked) PlayBlackjack();
         }
 
         private void DrawBtn_Click(object sender, EventArgs e) //przy nacisnieciu przycisku draw
@@ -245,17 +240,12 @@ namespace Projekt10
                     WarComparison(PlayerHand[PlayerHand.Count - 1], OpponentHand[OpponentHand.Count - 1]);
                 }
             }
-
-            if (BlackjackRadioBtn.Checked)//jeżeli gramy w oczko to pobieramy karte jak na oczku
-            {
-
-            }
+            if(BlackjackRadioBtn.Checked) PlayBlackjack();
         }
 
         private void StayBtn_Click(object sender, EventArgs e)
         {
-            //let the Ai have it's turn to draw or stay or just draw
-            StayButtonClicked = true;
+            PlayerPass = true;
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -277,13 +267,22 @@ namespace Projekt10
             picturebox.Image = (Image)Properties.Resources.ResourceManager.GetObject(ImageName);
         }
 
-        public void WinOrLoseWindow(string text)
+        private void WinOrLoseWindow(string text)
         {
             DialogResult result = MessageBox.Show(text);
             if (result == DialogResult.OK)
             {
                 Application.Restart();
             }
+        }
+        private void ActualizeLabels()
+        {
+            SetCard(OpponentHand, OpponentCard); //zaktualizuj karte
+            SetCard(PlayerHand, PlayerCard); //karta
+            OpponentNumberOfCards.Text = OpponentDeck.Count.ToString(); //karty w decku
+            PlayerNumberOfCards.Text = PlayerDeck.Count.ToString(); //karty w decku
+            Opponent_label.Text = "Score: " + Opponentscore.ToString(); //wynik aktualny
+            Player_label.Text = "Score: " + Playerscore.ToString(); //wynik aktualny
         }
     }
 }
