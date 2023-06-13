@@ -58,17 +58,27 @@ namespace Projekt10
 
         private void WarComparison(Card playercard, Card opponentcard)
         {
-            if (playercard.GetValue() == opponentcard.GetValue())PlayWar();
+            if (playercard.GetValue() == opponentcard.GetValue())
+            {
+                PlayerHand.Add(Deck.DrawCard(PlayerDeck));
+                OpponentHand.Add(Deck.DrawCard(OpponentDeck));
+                PlayWar();
+            }
 
-            if (playercard.GetValue() > opponentcard.GetValue())
+            if (playercard.GetValue() > opponentcard.GetValue())//gracz wygrywa bitwe
             {
                 PlayerDeck.AddRange(PlayerHand);
+                PlayerDeck.AddRange(OpponentHand);
             }
 
-            if (playercard.GetValue() < opponentcard.GetValue())
+            if (playercard.GetValue() < opponentcard.GetValue())//oponent wygrywa bitwe
             {
                 OpponentDeck.AddRange(OpponentHand);
+                OpponentDeck.AddRange(PlayerHand);
             }
+
+            PlayerHand.Clear();
+            OpponentHand.Clear();
 
             if (PlayerDeck.Count == 52)/*komunikat wygranej i break*/
             {
