@@ -159,7 +159,7 @@
             // OpponentDeckPictureBox
             // 
             OpponentDeckPictureBox.Image = Properties.Resources.back;
-            OpponentDeckPictureBox.Location = new Point(130, 71);
+            OpponentDeckPictureBox.Location = new Point(522, 26);
             OpponentDeckPictureBox.Margin = new Padding(3, 4, 3, 4);
             OpponentDeckPictureBox.Name = "OpponentDeckPictureBox";
             OpponentDeckPictureBox.Size = new Size(60, 92);
@@ -170,7 +170,7 @@
             // PlayerDeckPictureBox
             // 
             PlayerDeckPictureBox.Image = Properties.Resources.back;
-            PlayerDeckPictureBox.Location = new Point(130, 312);
+            PlayerDeckPictureBox.Location = new Point(522, 268);
             PlayerDeckPictureBox.Margin = new Padding(3, 4, 3, 4);
             PlayerDeckPictureBox.Name = "PlayerDeckPictureBox";
             PlayerDeckPictureBox.Size = new Size(60, 92);

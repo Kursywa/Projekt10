@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using NAudio.Wave;
 using System.IO;
 using Projekt10.Properties;
-using System.Collections;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 
 namespace Projekt10
 {
@@ -35,15 +35,12 @@ namespace Projekt10
         public MainForm()
         {
             InitializeComponent();
-            /*outputDevice = new WaveOutEvent();
-            string filePath = System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Music\\Soundtrack.mp3"); ;
-            audioFile = new AudioFileReader(filePath);*/
             DrawButtonClicked = false;
             StayButtonClicked = false;
             Opponentscore = 0;
             Playerscore = 0;
         }
-        private void PlayWar() //implementujemy wojne tutaj
+        private void InitializeWar() //implementujemy wojne tutaj
         {                      //ace>king>queen>jack>10>9>8>7>6>5>4>3>2
             PassBtn.Hide();
             Deck deck = new Deck();
@@ -63,73 +60,27 @@ namespace Projekt10
             OpponentNumberOfCards.Text = OpponentDeck.Count.ToString();
             PlayerNumberOfCards.Text = PlayerDeck.Count.ToString();
 
-            OpponentHand.Add(Deck.DrawCard(OpponentDeck));//dobierz z decku ooponenta
-            PlayerHand.Add(Deck.DrawCard(PlayerDeck)); //dobierz z decku gracza
-            //zliczenie wyniku (przenieść do odzielnej funkcji  zależności od gry
-            Opponentscore = OpponentHand.Sum(obj => obj.GetValue());
-            Playerscore = PlayerHand.Sum(obj => obj.GetValue());
-            //aktualizacja labelek (przenieść ją do oddzielnej funkcji dla wojny lub oczka)
-            SetCard(OpponentHand, OpponentCard); //zaktualizuj karte
-            SetCard(PlayerHand, PlayerCard); //karta
-            OpponentNumberOfCards.Text = OpponentDeck.Count.ToString(); //karty w decku
-            PlayerNumberOfCards.Text = PlayerDeck.Count.ToString(); //karty w decku
-            Opponent_label.Text = "Score: " + Opponentscore.ToString(); //wynik aktualny
-            Player_label.Text = "Score: " + Playerscore.ToString(); //wynik aktualny
-
-            /* while (!endgame)            //jezeli przeniesiemy tego while do drawbtn_click to nie zawiesi sie, ale wykona tylko jeden raz
-             {
-                 if (DrawButtonClicked)
-                 {
-                     DrawButtonClicked = false;
-                     if (PlayerDeck.Count > 0)//danie graczowi karty
-                     {
-                         Card drawnCard = PlayerDeck[0];
-                         PlayerDeck.RemoveAt(0);
-                         PlayerSide.Add(drawnCard);
-
-                         // Instrukcje dotyczące wyświetlania karty gracza
-                         Player_label.Text = drawnCard.GetSuit().ToString() + drawnCard.GetValue().ToString();
-                     }
-
-                     if (OpponentDeck.Count > 0)//danie przeciwnikowi karty
-                     {
-                         Card opponentCard = OpponentDeck[0];
-                         OpponentDeck.RemoveAt(0);
-                         OpponentSide.Add(opponentCard);
-
-                         // Instrukcje dotyczące wyświetlania karty przeciwnika
-                         Opponent_label.Text = opponentCard.GetSuit().ToString() + opponentCard.GetValue().ToString();
-                     }
-
-                     SetCard(PlayerSide, PlayerCard);
-                     SetCard(OpponentSide, OpponentCard);
-                 }
-
-                 if (PlayerSide.Count > 0 && OpponentSide.Count > 0)
-                 {
-                     WarComparison(PlayerSide[PlayerSide.Count - 1], OpponentSide[OpponentSide.Count - 1]);
-                 }
-             }*/
+            Opponent_label.Hide();
+            Player_label.Hide();
         }
 
         private void WarComparison(Card playercard, Card opponentcard)
         {
-
-            /* if (playercard.GetValue() == opponentcard.GetValue())
+             if (playercard.GetValue() == opponentcard.GetValue())
              {
-                 PlayerSide.Add(PlayerDeck[0]);
+                 PlayerHand.Add(PlayerDeck[0]);
                  PlayerDeck.RemoveAt(0);
-                 OpponentSide.Add(OpponentDeck[0]);
+                 OpponentHand.Add(OpponentDeck[0]);
                  OpponentDeck.RemoveAt(0);
              }
              else if (playercard.GetValue() > opponentcard.GetValue())
              {
-                 PlayerDeck.AddRange(PlayerSide);
+                 PlayerDeck.AddRange(PlayerHand);
              }
              else
              {
-                 OpponentDeck.AddRange(OpponentSide);
-             }*/
+                 OpponentDeck.AddRange(OpponentHand);
+             }
 
             if (PlayerDeck.Count == 52)/*komunikat wygranej i break*/
             {
@@ -242,8 +193,8 @@ namespace Projekt10
             //groupBox1.Hide();
             DrawBtn.Show();
             StopBtn.Show();
-            if (WarRadioBtn.Checked) PlayWar();
             if (BlackjackRadioBtn.Checked) InitilizeBlackjack();
+            if (WarRadioBtn.Checked) InitializeWar();
         }
 
         private void StopBtn_Click(object sender, EventArgs e)//stop the game
@@ -255,8 +206,49 @@ namespace Projekt10
         }
         private void DrawBtn_Click(object sender, EventArgs e) //przy nacisnieciu przycisku draw
         {
+            if (WarRadioBtn.Checked)//jeżeli gramy w wojne to pobieramy karte jak na wojnie
+            {
+                OpponentHand.Add(Deck.DrawCard(OpponentDeck));//dobierz z decku ooponenta
+                PlayerHand.Add(Deck.DrawCard(PlayerDeck)); //dobierz z decku gracza
+                                                           //zliczenie wyniku (przenieść do odzielnej funkcji  zależności od gry
+                Opponentscore = OpponentHand.Sum(obj => obj.GetValue());
+                Playerscore = PlayerHand.Sum(obj => obj.GetValue());
+                //aktualizacja labelek (przenieść ją do oddzielnej funkcji dla wojny lub oczka)
+                SetCard(OpponentHand, OpponentCard); //zaktualizuj karte
+                SetCard(PlayerHand, PlayerCard); //karta
+                OpponentNumberOfCards.Text = OpponentDeck.Count.ToString(); //karty w decku
+                PlayerNumberOfCards.Text = PlayerDeck.Count.ToString(); //karty w decku
+                Opponent_label.Text = "Score: " + Opponentscore.ToString(); //wynik aktualny
+                Player_label.Text = "Score: " + Playerscore.ToString(); //wynik aktualny
+
+                if (PlayerDeck.Count > 0)//danie graczowi karty
+                {
+                     Card drawnCard = PlayerDeck[0];
+                     PlayerDeck.RemoveAt(0);
+                     PlayerHand.Add(drawnCard);
+                     // Instrukcje dotyczące wyświetlania karty gracza
+                     Player_label.Text = drawnCard.GetSuit().ToString() + drawnCard.GetValue().ToString();
+                }
+
+                if (OpponentDeck.Count > 0)//danie przeciwnikowi karty
+                {
+                     Card opponentCard = OpponentDeck[0];
+                     OpponentDeck.RemoveAt(0);
+                     OpponentHand.Add(opponentCard);
+                     // Instrukcje dotyczące wyświetlania karty przeciwnika
+                     Opponent_label.Text = opponentCard.GetSuit().ToString() + opponentCard.GetValue().ToString();
+                }
+
+                SetCard(PlayerHand, PlayerCard);
+                SetCard(OpponentHand, OpponentCard);
+                
+
+                if (PlayerHand.Count >= 0 && OpponentHand.Count >= 0)
+                {
+                     WarComparison(PlayerHand[PlayerHand.Count - 1], OpponentHand[OpponentHand.Count - 1]);
+                }
+            }
             if(BlackjackRadioBtn.Checked) PlayBlackjack();
-            DrawButtonClicked = true;
         }
 
         private void StayBtn_Click(object sender, EventArgs e)
