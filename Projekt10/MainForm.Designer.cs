@@ -124,7 +124,7 @@
             // OpponentDeckPictureBox
             // 
             OpponentDeckPictureBox.Image = Properties.Resources.back;
-            OpponentDeckPictureBox.Location = new Point(522, 26);
+            OpponentDeckPictureBox.Location = new Point(471, 71);
             OpponentDeckPictureBox.Margin = new Padding(3, 4, 3, 4);
             OpponentDeckPictureBox.Name = "OpponentDeckPictureBox";
             OpponentDeckPictureBox.Size = new Size(60, 92);
@@ -135,7 +135,7 @@
             // PlayerDeckPictureBox
             // 
             PlayerDeckPictureBox.Image = Properties.Resources.back;
-            PlayerDeckPictureBox.Location = new Point(522, 268);
+            PlayerDeckPictureBox.Location = new Point(471, 312);
             PlayerDeckPictureBox.Margin = new Padding(3, 4, 3, 4);
             PlayerDeckPictureBox.Name = "PlayerDeckPictureBox";
             PlayerDeckPictureBox.Size = new Size(60, 92);
@@ -146,7 +146,7 @@
             // OpponentCard
             // 
             OpponentCard.Image = Properties.Resources.empty;
-            OpponentCard.Location = new Point(249, 71);
+            OpponentCard.Location = new Point(78, 71);
             OpponentCard.Margin = new Padding(3, 4, 3, 4);
             OpponentCard.Name = "OpponentCard";
             OpponentCard.Size = new Size(60, 92);
@@ -157,7 +157,7 @@
             // PlayerCard
             // 
             PlayerCard.Image = Properties.Resources.empty;
-            PlayerCard.Location = new Point(249, 312);
+            PlayerCard.Location = new Point(78, 312);
             PlayerCard.Margin = new Padding(3, 4, 3, 4);
             PlayerCard.Name = "PlayerCard";
             PlayerCard.Size = new Size(60, 92);
@@ -167,10 +167,9 @@
             // 
             // Opponent_label
             // 
-            Opponent_label.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             Opponent_label.AutoSize = true;
             Opponent_label.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            Opponent_label.Location = new Point(249, 39);
+            Opponent_label.Location = new Point(78, 39);
             Opponent_label.Name = "Opponent_label";
             Opponent_label.Size = new Size(152, 28);
             Opponent_label.TabIndex = 6;
@@ -180,7 +179,7 @@
             // 
             Player_label.AutoSize = true;
             Player_label.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            Player_label.Location = new Point(249, 280);
+            Player_label.Location = new Point(78, 280);
             Player_label.Name = "Player_label";
             Player_label.Size = new Size(115, 28);
             Player_label.TabIndex = 7;
@@ -189,18 +188,20 @@
             // OpponentNumberOfCards
             // 
             OpponentNumberOfCards.AutoSize = true;
-            OpponentNumberOfCards.Location = new Point(547, 122);
+            OpponentNumberOfCards.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            OpponentNumberOfCards.Location = new Point(488, 167);
             OpponentNumberOfCards.Name = "OpponentNumberOfCards";
-            OpponentNumberOfCards.Size = new Size(18, 20);
+            OpponentNumberOfCards.Size = new Size(24, 28);
             OpponentNumberOfCards.TabIndex = 16;
             OpponentNumberOfCards.Text = "o";
             // 
             // PlayerNumberOfCards
             // 
             PlayerNumberOfCards.AutoSize = true;
-            PlayerNumberOfCards.Location = new Point(547, 364);
+            PlayerNumberOfCards.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            PlayerNumberOfCards.Location = new Point(488, 408);
             PlayerNumberOfCards.Name = "PlayerNumberOfCards";
-            PlayerNumberOfCards.Size = new Size(18, 20);
+            PlayerNumberOfCards.Size = new Size(24, 28);
             PlayerNumberOfCards.TabIndex = 17;
             PlayerNumberOfCards.Text = "p";
             // 
@@ -220,6 +221,7 @@
             Controls.Add(PassBtn);
             Controls.Add(DrawBtn);
             Controls.Add(groupBox1);
+            Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             Name = "MainForm";
             Text = "MainForm";
             Load += MainForm_Load;
