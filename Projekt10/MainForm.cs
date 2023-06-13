@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using NAudio.Wave;
 using System.IO;
 using Projekt10.Properties;
+using System.Collections;
 
 namespace Projekt10
 {
@@ -18,22 +19,23 @@ namespace Projekt10
         //private WaveOutEvent outputDevice;
         //private AudioFileReader audioFile;
         //private Thread musicThread;
-        private bool warwin;
-        private bool blackjackwin;
         private bool DrawButtonClicked, StayButtonClicked;
         private bool endgame = false;
         string[] Suits = { "hearts", "spades", "diamonds", "clubs" };
-        List<Card> PlayerDeck, OpponentDeck, MainDeck, PlayerSide, OpponentSide;
-        int Opponentscore, Playerscore, playerwins, opponentwins;
+        int Opponentscore, Playerscore;
         string LoseText = "You lost!";
         string WinText = "You win!";
+        List<Card> OpponentDeck = new List<Card>();
+        List<Card> OpponentHand = new List<Card>();
+        List<Card> PlayerDeck = new List<Card>();
+        List<Card> PlayerHand = new List<Card>();
+        List<Card> MainDeck = new List<Card>();
         public MainForm()
         {
             InitializeComponent();
             /*outputDevice = new WaveOutEvent();
             string filePath = System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Music\\Soundtrack.mp3"); ;
             audioFile = new AudioFileReader(filePath);*/
-            blackjackwin = false;
             DrawButtonClicked = false;
             StayButtonClicked = false;
             Opponentscore = 0;
@@ -44,74 +46,78 @@ namespace Projekt10
             StayBtn.Hide();
             Deck deck = new Deck();
             MainDeck = new List<Card>();
-            OpponentSide = new List<Card>();
-            PlayerSide = new List<Card>();
             deck.MakeDefaultDeck();
             MainDeck = deck.GetDeck();
             deck.Shuffle(MainDeck);//tosujemy karty
-            OpponentDeck = new List<Card>(26);
-            PlayerDeck = new List<Card>(26);
+            OpponentDeck = new List<Card>();
+            PlayerDeck = new List<Card>();
+            OpponentHand = new List<Card>();
+            PlayerHand = new List<Card>();
 
 
             for (int i = 0; i < 26; i++) //rozdzielenie kart miedzy graczami
             {
-                OpponentDeck.Add(deck.DrawCard(MainDeck));
-                PlayerDeck.Add(deck.DrawCard(MainDeck));
+                OpponentDeck.Add(Deck.DrawCard(MainDeck));
+                PlayerDeck.Add(Deck.DrawCard(MainDeck));
             }
+            //uaktualnienie labelek decków graczy
+            OpponentNumberOfCards.Text = OpponentDeck.Count.ToString();
+            PlayerNumberOfCards.Text = PlayerDeck.Count.ToString();
 
-            while (!endgame)            //jezeli przeniesiemy tego while do drawbtn_click to nie zawiesi sie, ale wykona tylko jeden raz
-            {
-                if (DrawButtonClicked)
-                {
-                    DrawButtonClicked = false;
-                    if (PlayerDeck.Count > 0)//danie graczowi karty
-                    {
-                        Card drawnCard = PlayerDeck[0];
-                        PlayerDeck.RemoveAt(0);
-                        PlayerSide.Add(drawnCard);
+            /* while (!endgame)            //jezeli przeniesiemy tego while do drawbtn_click to nie zawiesi sie, ale wykona tylko jeden raz
+             {
+                 if (DrawButtonClicked)
+                 {
+                     DrawButtonClicked = false;
+                     if (PlayerDeck.Count > 0)//danie graczowi karty
+                     {
+                         Card drawnCard = PlayerDeck[0];
+                         PlayerDeck.RemoveAt(0);
+                         PlayerSide.Add(drawnCard);
 
-                        // Instrukcje dotyczące wyświetlania karty gracza
-                        Player_label.Text = drawnCard.GetSuit().ToString() + drawnCard.GetValue().ToString();
-                    }
+                         // Instrukcje dotyczące wyświetlania karty gracza
+                         Player_label.Text = drawnCard.GetSuit().ToString() + drawnCard.GetValue().ToString();
+                     }
 
-                    if (OpponentDeck.Count > 0)//danie przeciwnikowi karty
-                    {
-                        Card opponentCard = OpponentDeck[0];
-                        OpponentDeck.RemoveAt(0);
-                        OpponentSide.Add(opponentCard);
+                     if (OpponentDeck.Count > 0)//danie przeciwnikowi karty
+                     {
+                         Card opponentCard = OpponentDeck[0];
+                         OpponentDeck.RemoveAt(0);
+                         OpponentSide.Add(opponentCard);
 
-                        // Instrukcje dotyczące wyświetlania karty przeciwnika
-                        Opponent_label.Text = opponentCard.GetSuit().ToString() + opponentCard.GetValue().ToString();
-                    }
+                         // Instrukcje dotyczące wyświetlania karty przeciwnika
+                         Opponent_label.Text = opponentCard.GetSuit().ToString() + opponentCard.GetValue().ToString();
+                     }
 
-                    SetCard(PlayerSide, PlayerCard);
-                    SetCard(OpponentSide, OpponentCard);
-                }
+                     SetCard(PlayerSide, PlayerCard);
+                     SetCard(OpponentSide, OpponentCard);
+                 }
 
-                if (PlayerSide.Count > 0 && OpponentSide.Count > 0)
-                {
-                    WarComparison(PlayerSide[PlayerSide.Count - 1], OpponentSide[OpponentSide.Count - 1]);
-                }
-            }
+                 if (PlayerSide.Count > 0 && OpponentSide.Count > 0)
+                 {
+                     WarComparison(PlayerSide[PlayerSide.Count - 1], OpponentSide[OpponentSide.Count - 1]);
+                 }
+             }*/
         }
 
         private void WarComparison(Card playercard, Card opponentcard)
         {
-            if (playercard.GetValue() == opponentcard.GetValue())
-            {
-                PlayerSide.Add(PlayerDeck[0]);
-                PlayerDeck.RemoveAt(0);
-                OpponentSide.Add(OpponentDeck[0]);
-                OpponentDeck.RemoveAt(0);
-            }
-            else if (playercard.GetValue() > opponentcard.GetValue())
-            {
-                PlayerDeck.AddRange(PlayerSide);
-            }
-            else
-            {
-                OpponentDeck.AddRange(OpponentSide);
-            }
+
+            /* if (playercard.GetValue() == opponentcard.GetValue())
+             {
+                 PlayerSide.Add(PlayerDeck[0]);
+                 PlayerDeck.RemoveAt(0);
+                 OpponentSide.Add(OpponentDeck[0]);
+                 OpponentDeck.RemoveAt(0);
+             }
+             else if (playercard.GetValue() > opponentcard.GetValue())
+             {
+                 PlayerDeck.AddRange(PlayerSide);
+             }
+             else
+             {
+                 OpponentDeck.AddRange(OpponentSide);
+             }*/
 
             if (PlayerDeck.Count == 52)/*komunikat wygranej i break*/
             {
@@ -130,13 +136,13 @@ namespace Projekt10
             StayBtn.Show();
             Deck deck = new Deck();
             MainDeck = new List<Card>();
-            OpponentSide = new List<Card>();
-            PlayerSide = new List<Card>();
+            /*OpponentSide = new List<Card>();
+            PlayerSide = new List<Card>();*/
             deck.MakeDefaultDeck();
             MainDeck = deck.GetDeck();
             deck.Shuffle(MainDeck);//tosujemy karty
             //trzeba zrobić foreachem
-            foreach(var Deck in MainDeck)
+            foreach (var Deck in MainDeck)
             {
                 switch (Deck.GetValue())
                 {
@@ -163,28 +169,29 @@ namespace Projekt10
 
             }*/
             //tu powinna być mertoda przleiczająca ręke przeciwnika i gracza
-            PlayerSide.Add(MainDeck[0]);//backfaced
-            MainDeck.RemoveAt(0);
-            Playerscore += PlayerSide[PlayerSide.Count - 1].GetValue();
+            /*
+                        PlayerSide.Add(MainDeck[0]);//backfaced
+                        MainDeck.RemoveAt(0);
+                        Playerscore += PlayerSide[PlayerSide.Count - 1].GetValue();
 
-            OpponentSide.Add(MainDeck[0]);//backfaced
-            MainDeck.RemoveAt(0);
-            Opponentscore += OpponentSide[OpponentSide.Count - 1].GetValue();
+                        OpponentSide.Add(MainDeck[0]);//backfaced
+                        MainDeck.RemoveAt(0);
+                        Opponentscore += OpponentSide[OpponentSide.Count - 1].GetValue();
 
-            PlayerSide.Add(MainDeck[0]);//upfaced
-            MainDeck.RemoveAt(0);
-            Playerscore += PlayerSide[PlayerSide.Count - 1].GetValue();
+                        PlayerSide.Add(MainDeck[0]);//upfaced
+                        MainDeck.RemoveAt(0);
+                        Playerscore += PlayerSide[PlayerSide.Count - 1].GetValue();
 
-            OpponentSide.Add(MainDeck[0]);//upfaced
-            MainDeck.RemoveAt(0);
-            Opponentscore += OpponentSide[OpponentSide.Count - 1].GetValue();
-
+                        OpponentSide.Add(MainDeck[0]);//upfaced
+                        MainDeck.RemoveAt(0);
+                        Opponentscore += OpponentSide[OpponentSide.Count - 1].GetValue();
+            */
             while (true)
             {
                 //opponentlabel should be ? + the rest of the upfaced cards
                 //opponentlabel should be backfaced card value + the rest of the upfaced cards
 
-                if (DrawButtonClicked)
+                /*if (DrawButtonClicked)
                 {
                     DrawButtonClicked = false;
                     PlayerSide.Add(MainDeck[0]);
@@ -198,7 +205,7 @@ namespace Projekt10
                         Opponentscore += OpponentSide[OpponentSide.Count - 1].GetValue();
                     }
                     else Opponentstay = true;
-                }
+                }*/
 
                 if (StayButtonClicked) Playerstay = true;
 
@@ -224,13 +231,10 @@ namespace Projekt10
         {
             //po klinkięciu "start" egzekwowane są metody zależne od opcji:
             //blackjack albo war game
+
             //groupBox1.Hide();
-            testlabel.Text = "start nacisniety"; //debugowanie
             DrawBtn.Show();
             StopBtn.Show();
-            testlabel.Text = "start nacisniety"; //debugowanie
-            //BackgroundpictureBox.Show();
-            //BackgroundpictureBox.Image = (Image)Properties.Resources.ResourceManager.GetObject("background.jpg");
             if (WarRadioBtn.Checked) PlayWar();
             if (BlackjackRadioBtn.Checked) PlayBlackjack();
         }
@@ -240,13 +244,24 @@ namespace Projekt10
             DrawBtn.Hide();//mf cant do a thing because we hide the action buttons
             StayBtn.Hide();
             StopBtn.Hide();
-            groupBox1.Show();
+            //groupBox1.Show();
             ResumeBtn.Show();
         }
-        private void DrawBtn_Click(object sender, EventArgs e)
+        private void DrawBtn_Click(object sender, EventArgs e) //przy nacisnieciu przycisku draw
         {
-            //play the drawsound I guess
-            DrawButtonClicked = true;
+            OpponentHand.Add(Deck.DrawCard(OpponentDeck));//dobierz z decku ooponenta
+            PlayerHand.Add(Deck.DrawCard(PlayerDeck)); //dobierz z decku gracza
+            //zliczenie wyniku
+            Opponentscore = OpponentHand.Sum(obj => obj.GetValue());
+            Playerscore = PlayerHand.Sum(obj => obj.GetValue());
+            //aktualizacja labelek
+            SetCard(OpponentHand, OpponentCard); //zaktualizuj karte
+            SetCard(PlayerHand, PlayerCard); //karta
+            OpponentNumberOfCards.Text = OpponentDeck.Count.ToString(); //karty w decku
+            PlayerNumberOfCards.Text = PlayerDeck.Count.ToString(); //karty w decku
+            Opponent_label.Text = "Score: " + Opponentscore.ToString(); //wynik aktualny
+            Player_label.Text = "Score: " + Playerscore.ToString(); //wynik aktualny
+            //DrawButtonClicked = true; //nie wiem po co to
         }
 
         private void StayBtn_Click(object sender, EventArgs e)
@@ -285,7 +300,7 @@ namespace Projekt10
             var ImageName = analyzedCard.GetFaceCard().ToString();
             picturebox.Image = (Image)Properties.Resources.ResourceManager.GetObject(ImageName);
         }
-        
+
         public void WinOrLoseWindow(string text)
         {
             DialogResult result = MessageBox.Show(text);
