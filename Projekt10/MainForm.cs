@@ -25,7 +25,8 @@ namespace Projekt10
         string[] Suits = { "hearts", "spades", "diamonds", "clubs" };
         List<Card> PlayerDeck, OpponentDeck, MainDeck, PlayerSide, OpponentSide;
         int Opponentscore, Playerscore, playerwins, opponentwins;
-
+        string LoseText = "You lost!";
+        string WinText = "You win!";
         public MainForm()
         {
             InitializeComponent();
@@ -41,7 +42,6 @@ namespace Projekt10
         private void PlayWar() //implementujemy wojne tutaj
         {                      //ace>king>queen>jack>10>9>8>7>6>5>4>3>2
             StayBtn.Hide();
-            warReset();
             Deck deck = new Deck();
             MainDeck = new List<Card>();
             OpponentSide = new List<Card>();
@@ -115,13 +115,11 @@ namespace Projekt10
 
             if (PlayerDeck.Count == 52)/*komunikat wygranej i break*/
             {
-                endgame = true;
-                Verdict.Text = "Wygrana";
+                WinOrLoseWindow(WinText);
             }
-            if (PlayerDeck.Count == 0)/*komunikat przegranej i break*/
+            else if (PlayerDeck.Count == 0)/*komunikat przegranej i break*/
             {
-                endgame = true;
-                Verdict.Text = "Przegrana";
+                WinOrLoseWindow(WinText);
             }
         }
 
@@ -129,10 +127,7 @@ namespace Projekt10
         {                            //highest card value is 11 and give it place for 6 cards max per player
             bool Opponentstay = false;
             bool Playerstay = false;
-            playerwins = 0;
-            opponentwins = 0; //po co to?żeby użytkownik też mógł przegrać
             StayBtn.Show();
-            jackReset();
             Deck deck = new Deck();
             MainDeck = new List<Card>();
             OpponentSide = new List<Card>();
@@ -140,15 +135,34 @@ namespace Projekt10
             deck.MakeDefaultDeck();
             MainDeck = deck.GetDeck();
             deck.Shuffle(MainDeck);//tosujemy karty
-
-            for (int i = 0; i < 56; i++)//we need to change values for the game
+            //trzeba zrobić foreachem
+            foreach(var Deck in MainDeck)
+            {
+                switch (Deck.GetValue())
+                {
+                    case 11:
+                        Deck.SetValue(2);
+                        break;
+                    case 12:
+                        Deck.SetValue(3);
+                        break;
+                    case 13:
+                        Deck.SetValue(4);
+                        break;
+                    case 14:
+                        Deck.SetValue(11);
+                        break;
+                }
+            }
+            /*for (int i = 0; i < 56; i++)//we need to change values for the game
             {
                 if (MainDeck[i].GetValue() == 11) MainDeck[i].SetValue(2);
                 if (MainDeck[i].GetValue() == 12) MainDeck[i].SetValue(3);
                 if (MainDeck[i].GetValue() == 13) MainDeck[i].SetValue(4);
                 if (MainDeck[i].GetValue() == 14) MainDeck[i].SetValue(11);
-            }
 
+            }*/
+            //tu powinna być mertoda przleiczająca ręke przeciwnika i gracza
             PlayerSide.Add(MainDeck[0]);//backfaced
             MainDeck.RemoveAt(0);
             Playerscore += PlayerSide[PlayerSide.Count - 1].GetValue();
@@ -190,8 +204,6 @@ namespace Projekt10
 
                 if (Playerstay && Opponentstay) BlackJackComparison();
 
-                if (playerwins == 2)/*wygrywasz i break*/;
-                if (opponentwins == 2)/*przegrywasz i break*/;
             }
         }
 
@@ -199,12 +211,12 @@ namespace Projekt10
         {
             if ((Opponentscore <= 21 && Playerscore > 21) || (Opponentscore > 21 && Playerscore > 21 && Opponentscore < Playerscore) || (Opponentscore <= 21 && Playerscore <= 21 && Opponentscore > Playerscore))
             {
-                opponentwins++;
+                WinOrLoseWindow(WinText);
             }
 
             if ((Opponentscore > 21 && Playerscore <= 21) || (Opponentscore > 21 && Playerscore > 21 && Opponentscore > Playerscore) || (Opponentscore <= 21 && Playerscore <= 21 && Opponentscore < Playerscore))
             {
-                playerwins++;
+                WinOrLoseWindow(LoseText);
             }
         }
 
@@ -212,11 +224,11 @@ namespace Projekt10
         {
             //po klinkięciu "start" egzekwowane są metody zależne od opcji:
             //blackjack albo war game
-            groupBox1.Hide();
-            testlabel.Text = "start nacisniety";
+            //groupBox1.Hide();
+            testlabel.Text = "start nacisniety"; //debugowanie
             DrawBtn.Show();
             StopBtn.Show();
-            testlabel.Text = "start nacisniety";
+            testlabel.Text = "start nacisniety"; //debugowanie
             //BackgroundpictureBox.Show();
             //BackgroundpictureBox.Image = (Image)Properties.Resources.ResourceManager.GetObject("background.jpg");
             if (WarRadioBtn.Checked) PlayWar();
@@ -242,17 +254,6 @@ namespace Projekt10
             //let the Ai have it's turn to draw or stay or just draw
             StayButtonClicked = true;
         }
-
-        private void jackReset()//The blackjack reset
-        {
-            //Show blackJack UI
-        }
-
-        private void warReset()//The war reset
-        {
-            //Show war UI
-        }
-
         private void ResumeBtn_Click(object sender, EventArgs e)
         {
             groupBox1.Hide();
@@ -285,5 +286,13 @@ namespace Projekt10
             picturebox.Image = (Image)Properties.Resources.ResourceManager.GetObject(ImageName);
         }
         
+        public void WinOrLoseWindow(string text)
+        {
+            DialogResult result = MessageBox.Show(text);
+            if (result == DialogResult.OK)
+            {
+                Application.Restart();
+            }
+        }
     }
 }
