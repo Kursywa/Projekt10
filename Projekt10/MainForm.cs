@@ -11,6 +11,7 @@ using NAudio.Wave;
 using System.IO;
 using Projekt10.Properties;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
+using System.Threading;
 
 namespace Projekt10
 {
@@ -67,21 +68,21 @@ namespace Projekt10
 
         private void WarComparison(Card playercard, Card opponentcard)
         {
-             if (playercard.GetValue() == opponentcard.GetValue())
-             {
-                 PlayerHand.Add(PlayerDeck[0]);
-                 PlayerDeck.RemoveAt(0);
-                 OpponentHand.Add(OpponentDeck[0]);
-                 OpponentDeck.RemoveAt(0);
-             }
-             else if (playercard.GetValue() > opponentcard.GetValue())
-             {
-                 PlayerDeck.AddRange(PlayerHand);
-             }
-             else
-             {
-                 OpponentDeck.AddRange(OpponentHand);
-             }
+            if (playercard.GetValue() == opponentcard.GetValue())
+            {
+                PlayerHand.Add(PlayerDeck[0]);
+                PlayerDeck.RemoveAt(0);
+                OpponentHand.Add(OpponentDeck[0]);
+                OpponentDeck.RemoveAt(0);
+            }
+            else if (playercard.GetValue() > opponentcard.GetValue())
+            {
+                PlayerDeck.AddRange(PlayerHand);
+            }
+            else
+            {
+                OpponentDeck.AddRange(OpponentHand);
+            }
 
             if (PlayerDeck.Count == 52)/*komunikat wygranej i break*/
             {
@@ -198,19 +199,10 @@ namespace Projekt10
 
             //groupBox1.Hide();
             DrawBtn.Show();
-            StopBtn.Show();
             if (WarRadioBtn.Checked) InitializeWar();
             if (BlackjackRadioBtn.Checked) PlayBlackjack();
         }
 
-        private void StopBtn_Click(object sender, EventArgs e)//stop the game
-        {
-            DrawBtn.Hide();//mf cant do a thing because we hide the action buttons
-            StayBtn.Hide();
-            StopBtn.Hide();
-            //groupBox1.Show();
-            ResumeBtn.Show();
-        }
         private void DrawBtn_Click(object sender, EventArgs e) //przy nacisnieciu przycisku draw
         {
             if (WarRadioBtn.Checked)//jeżeli gramy w wojne to pobieramy karte jak na wojnie
@@ -218,9 +210,7 @@ namespace Projekt10
                 OpponentHand.Add(Deck.DrawCard(OpponentDeck));//dobierz z decku ooponenta
                 PlayerHand.Add(Deck.DrawCard(PlayerDeck)); //dobierz z decku gracza
                                                            //zliczenie wyniku (przenieść do odzielnej funkcji  zależności od gry
-                Opponentscore = OpponentHand.Sum(obj => obj.GetValue());
-                Playerscore = PlayerHand.Sum(obj => obj.GetValue());
-                //aktualizacja labelek (przenieść ją do oddzielnej funkcji dla wojny lub oczka)
+                                                           //aktualizacja labelek (przenieść ją do oddzielnej funkcji dla wojny lub oczka)
                 SetCard(OpponentHand, OpponentCard); //zaktualizuj karte
                 SetCard(PlayerHand, PlayerCard); //karta
                 OpponentNumberOfCards.Text = OpponentDeck.Count.ToString(); //karty w decku
@@ -230,29 +220,29 @@ namespace Projekt10
 
                 if (PlayerDeck.Count > 0)//danie graczowi karty
                 {
-                     Card drawnCard = PlayerDeck[0];
-                     PlayerDeck.RemoveAt(0);
-                     PlayerHand.Add(drawnCard);
-                     // Instrukcje dotyczące wyświetlania karty gracza
-                     Player_label.Text = drawnCard.GetSuit().ToString() + drawnCard.GetValue().ToString();
+                    Card drawnCard = PlayerDeck[0];
+                    PlayerDeck.RemoveAt(0);
+                    PlayerHand.Add(drawnCard);
+                    // Instrukcje dotyczące wyświetlania karty gracza
+                    Player_label.Text = drawnCard.GetSuit().ToString() + drawnCard.GetValue().ToString();
                 }
 
                 if (OpponentDeck.Count > 0)//danie przeciwnikowi karty
                 {
-                     Card opponentCard = OpponentDeck[0];
-                     OpponentDeck.RemoveAt(0);
-                     OpponentHand.Add(opponentCard);
-                     // Instrukcje dotyczące wyświetlania karty przeciwnika
-                     Opponent_label.Text = opponentCard.GetSuit().ToString() + opponentCard.GetValue().ToString();
+                    Card opponentCard = OpponentDeck[0];
+                    OpponentDeck.RemoveAt(0);
+                    OpponentHand.Add(opponentCard);
+                    // Instrukcje dotyczące wyświetlania karty przeciwnika
+                    Opponent_label.Text = opponentCard.GetSuit().ToString() + opponentCard.GetValue().ToString();
                 }
 
                 SetCard(PlayerHand, PlayerCard);
                 SetCard(OpponentHand, OpponentCard);
-                
+
 
                 if (PlayerHand.Count >= 0 && OpponentHand.Count >= 0)
                 {
-                     WarComparison(PlayerHand[PlayerHand.Count - 1], OpponentHand[OpponentHand.Count - 1]);
+                    WarComparison(PlayerHand[PlayerHand.Count - 1], OpponentHand[OpponentHand.Count - 1]);
                 }
             }
 
@@ -266,18 +256,6 @@ namespace Projekt10
         {
             //let the Ai have it's turn to draw or stay or just draw
             StayButtonClicked = true;
-        }
-        private void ResumeBtn_Click(object sender, EventArgs e)
-        {
-            groupBox1.Hide();
-            DrawBtn.Show();
-            StopBtn.Show();
-
-            if (WarRadioBtn.Checked) PlayWar();
-            else if (BlackjackRadioBtn.Checked) PlayBlackjack();
-
-            if (WarRadioBtn.Checked) StayBtn.Hide();
-            else if (BlackjackRadioBtn.Checked) StayBtn.Show();
         }
 
         private void MainForm_Load(object sender, EventArgs e)

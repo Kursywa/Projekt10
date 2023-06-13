@@ -33,9 +33,7 @@
             StartBtn = new Button();
             BlackjackRadioBtn = new RadioButton();
             DrawBtn = new Button();
-            StopBtn = new Button();
             StayBtn = new Button();
-            ResumeBtn = new Button();
             Opponent_label = new Label();
             Player_label = new Label();
             OpponentDeckPictureBox = new PictureBox();
@@ -112,18 +110,6 @@
             DrawBtn.Visible = false;
             DrawBtn.Click += DrawBtn_Click;
             // 
-            // StopBtn
-            // 
-            StopBtn.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            StopBtn.Location = new Point(627, 379);
-            StopBtn.Name = "StopBtn";
-            StopBtn.Size = new Size(131, 49);
-            StopBtn.TabIndex = 3;
-            StopBtn.Text = "STOP";
-            StopBtn.UseVisualStyleBackColor = true;
-            StopBtn.Visible = false;
-            StopBtn.Click += StopBtn_Click;
-            // 
             // StayBtn
             // 
             StayBtn.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
@@ -135,18 +121,6 @@
             StayBtn.UseVisualStyleBackColor = true;
             StayBtn.Visible = false;
             StayBtn.Click += StayBtn_Click;
-            // 
-            // ResumeBtn
-            // 
-            ResumeBtn.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            ResumeBtn.Location = new Point(627, 379);
-            ResumeBtn.Name = "ResumeBtn";
-            ResumeBtn.Size = new Size(131, 49);
-            ResumeBtn.TabIndex = 5;
-            ResumeBtn.Text = "RESUME";
-            ResumeBtn.UseVisualStyleBackColor = true;
-            ResumeBtn.Visible = false;
-            ResumeBtn.Click += ResumeBtn_Click;
             // 
             // Opponent_label
             // 
@@ -253,9 +227,7 @@
             Controls.Add(OpponentDeckPictureBox);
             Controls.Add(Player_label);
             Controls.Add(Opponent_label);
-            Controls.Add(ResumeBtn);
             Controls.Add(StayBtn);
-            Controls.Add(StopBtn);
             Controls.Add(DrawBtn);
             Controls.Add(groupBox1);
             Name = "MainForm";
@@ -278,9 +250,7 @@
         private RadioButton BlackjackRadioBtn;
         private Button StartBtn;
         private Button DrawBtn;
-        private Button StopBtn;
         private Button StayBtn;
-        private Button ResumeBtn;
         private Label Opponent_label;
         private Label Player_label;
         private PictureBox OpponentDeckPictureBox;
