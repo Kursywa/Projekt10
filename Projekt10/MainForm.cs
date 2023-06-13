@@ -57,18 +57,14 @@ namespace Projekt10
 
         private void WarComparison(Card playercard, Card opponentcard)
         {
-            if (playercard.GetValue() == opponentcard.GetValue())
-            {
-                PlayerHand.Add(PlayerDeck[0]);
-                PlayerDeck.RemoveAt(0);
-                OpponentHand.Add(OpponentDeck[0]);
-                OpponentDeck.RemoveAt(0);
-            }
-            else if (playercard.GetValue() > opponentcard.GetValue())
+            if (playercard.GetValue() == opponentcard.GetValue())PlayWar();
+
+            if (playercard.GetValue() > opponentcard.GetValue())
             {
                 PlayerDeck.AddRange(PlayerHand);
             }
-            else
+
+            if (playercard.GetValue() < opponentcard.GetValue())
             {
                 OpponentDeck.AddRange(OpponentHand);
             }
@@ -117,34 +113,7 @@ namespace Projekt10
             PlayerHand.Add(Deck.DrawCard(PlayerDeck)); //dobierz z decku gracza
                                                        //zliczenie wyniku (przenieść do odzielnej funkcji  zależności od gry
                                                        //aktualizacja labelek (przenieść ją do oddzielnej funkcji dla wojny lub oczka)
-            SetCard(OpponentHand, OpponentCard); //zaktualizuj karte
-            SetCard(PlayerHand, PlayerCard); //karta
-            OpponentNumberOfCards.Text = OpponentDeck.Count.ToString(); //karty w decku
-            PlayerNumberOfCards.Text = PlayerDeck.Count.ToString(); //karty w decku
-            Opponent_label.Text = "Score: " + Opponentscore.ToString(); //wynik aktualny
-            Player_label.Text = "Score: " + Playerscore.ToString(); //wynik aktualny
-
-            if (PlayerDeck.Count > 0)//danie graczowi karty
-            {
-                Card drawnCard = PlayerDeck[0];
-                PlayerDeck.RemoveAt(0);
-                PlayerHand.Add(drawnCard);
-                // Instrukcje dotyczące wyświetlania karty gracza
-                Player_label.Text = drawnCard.GetSuit().ToString() + drawnCard.GetValue().ToString();
-            }
-
-            if (OpponentDeck.Count > 0)//danie przeciwnikowi karty
-            {
-                Card opponentCard = OpponentDeck[0];
-                OpponentDeck.RemoveAt(0);
-                OpponentHand.Add(opponentCard);
-                // Instrukcje dotyczące wyświetlania karty przeciwnika
-                Opponent_label.Text = opponentCard.GetSuit().ToString() + opponentCard.GetValue().ToString();
-            }
-
-            SetCard(PlayerHand, PlayerCard);
-            SetCard(OpponentHand, OpponentCard);
-
+            ActualizeLabelsWar();
 
             if (PlayerHand.Count >= 0 && OpponentHand.Count >= 0)
             {
