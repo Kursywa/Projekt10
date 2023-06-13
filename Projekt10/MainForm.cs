@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using NAudio.Wave;
 using System.IO;
 using Projekt10.Properties;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 
 namespace Projekt10
 {
@@ -213,10 +214,8 @@ namespace Projekt10
             //po klinkięciu "start" egzekwowane są metody zależne od opcji:
             //blackjack albo war game
             groupBox1.Hide();
-            testlabel.Text = "start nacisniety";
-            DrawBtn.Show();
+            DrawBtn.Show();//why tf wont you show yoursefl, cmon
             StopBtn.Show();
-            testlabel.Text = "start nacisniety";
             //BackgroundpictureBox.Show();
             //BackgroundpictureBox.Image = (Image)Properties.Resources.ResourceManager.GetObject("background.jpg");
             if (WarRadioBtn.Checked) PlayWar();
