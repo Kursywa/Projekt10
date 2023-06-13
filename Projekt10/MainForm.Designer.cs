@@ -34,8 +34,7 @@
             BlackjackRadioBtn = new RadioButton();
             DrawBtn = new Button();
             StopBtn = new Button();
-            StayBtn = new Button();
-            ResumeBtn = new Button();
+            PassBtn = new Button();
             Opponent_label = new Label();
             Player_label = new Label();
             OpponentDeckPictureBox = new PictureBox();
@@ -124,29 +123,17 @@
             StopBtn.Visible = false;
             StopBtn.Click += StopBtn_Click;
             // 
-            // StayBtn
+            // PassBtn
             // 
-            StayBtn.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            StayBtn.Location = new Point(627, 312);
-            StayBtn.Name = "StayBtn";
-            StayBtn.Size = new Size(131, 48);
-            StayBtn.TabIndex = 4;
-            StayBtn.Text = "STAY";
-            StayBtn.UseVisualStyleBackColor = true;
-            StayBtn.Visible = false;
-            StayBtn.Click += StayBtn_Click;
-            // 
-            // ResumeBtn
-            // 
-            ResumeBtn.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            ResumeBtn.Location = new Point(627, 379);
-            ResumeBtn.Name = "ResumeBtn";
-            ResumeBtn.Size = new Size(131, 49);
-            ResumeBtn.TabIndex = 5;
-            ResumeBtn.Text = "RESUME";
-            ResumeBtn.UseVisualStyleBackColor = true;
-            ResumeBtn.Visible = false;
-            ResumeBtn.Click += ResumeBtn_Click;
+            PassBtn.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            PassBtn.Location = new Point(627, 312);
+            PassBtn.Name = "PassBtn";
+            PassBtn.Size = new Size(131, 48);
+            PassBtn.TabIndex = 4;
+            PassBtn.Text = "PASS";
+            PassBtn.UseVisualStyleBackColor = true;
+            PassBtn.Visible = false;
+            PassBtn.Click += StayBtn_Click;
             // 
             // Opponent_label
             // 
@@ -253,8 +240,7 @@
             Controls.Add(OpponentDeckPictureBox);
             Controls.Add(Player_label);
             Controls.Add(Opponent_label);
-            Controls.Add(ResumeBtn);
-            Controls.Add(StayBtn);
+            Controls.Add(PassBtn);
             Controls.Add(StopBtn);
             Controls.Add(DrawBtn);
             Controls.Add(groupBox1);
@@ -279,8 +265,7 @@
         private Button StartBtn;
         private Button DrawBtn;
         private Button StopBtn;
-        private Button StayBtn;
-        private Button ResumeBtn;
+        private Button PassBtn;
         private Label Opponent_label;
         private Label Player_label;
         private PictureBox OpponentDeckPictureBox;
