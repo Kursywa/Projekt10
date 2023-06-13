@@ -83,7 +83,7 @@ namespace Projekt10
             }
         }
 
-        private void InitilizeBlackjack() //implementujemy oczko tutaj
+        private void InitilizeBlackjack()
         {                            //highest card value is 11 and give it place for 6 cards max per player
             Deck deck = new Deck();
             MainDeck = new List<Card>();
@@ -113,18 +113,24 @@ namespace Projekt10
         private void PlayBlackjack()
         {
             //metoda na dobieranie do ręki
-            
+
             //nasza tura
-            PlayerHand.Add(Deck.DrawCard(MainDeck)); //dobierz z decku gracza
-            Playerscore = PlayerHand.Sum(obj => obj.GetValue());
-            if(Playerscore >21) BlackJackComparison();
-            ActualizeLabels(); //odswiez wynik
-            //tura przeciwnika
-            if ((Playerscore > Opponentscore) && Opponentscore < 18)
+            if (!PlayerPass)
             {
+                PlayerHand.Add(Deck.DrawCard(MainDeck)); //dobierz z decku gracza
+                Playerscore = PlayerHand.Sum(obj => obj.GetValue());
+                if (Playerscore > 21) BlackJackComparison();
+            }
+
+
+            //tura przeciwnika
+            if ((Opponentscore > Playerscore && Opponentscore < 11) || (Playerscore > Opponentscore) && Opponentscore < 18 && !OpponentPass)
+            {
+                //algorytm dobiera karty jeśli ma mniej niż 11 puntków, albo jak gracz
+                //ma więcej punktów niż on, a algorytm jeszcze nie ma 18
                 OpponentHand.Add(Deck.DrawCard(MainDeck));
                 Opponentscore = OpponentHand.Sum(obj => obj.GetValue());
-                if(Opponentscore > 21) BlackJackComparison();
+                if (Opponentscore > 21) BlackJackComparison();
             }
             else
             {
@@ -138,11 +144,13 @@ namespace Projekt10
 
         private void BlackJackComparison()
         {
+            ActualizeLabels(); //słabe miejsce na metode ale chcemy sie zabezpieczyc przed
+            //niewidzeniem wyniku po wygranej/przegranej
             if ((Opponentscore <= 21 && Playerscore > 21) || (Opponentscore <= 21 && Playerscore <= 21 && Opponentscore >= Playerscore))
             {
                 WinOrLoseWindow(LoseText);
             }
-            else if(Opponentscore > 21 || (Opponentscore <= 21 && Playerscore <= 21 && Playerscore > Opponentscore))
+            else if (Opponentscore > 21 || (Opponentscore <= 21 && Playerscore <= 21 && Playerscore > Opponentscore))
             {
                 WinOrLoseWindow(WinText);
             }
@@ -207,6 +215,8 @@ namespace Projekt10
         private void PassBtn_Click(object sender, EventArgs e)
         {
             PlayerPass = true;
+            DrawBtn.Text = "NEXT";
+            if (PlayerPass && OpponentPass) BlackJackComparison();
         }
         private void MainForm_Load(object sender, EventArgs e)
         {
@@ -217,10 +227,10 @@ namespace Projekt10
         {
 
         }
-        private void SetCard(List<Card> card, System.Windows.Forms.PictureBox picturebox)
+        private void SetCard(List<Card> hand, System.Windows.Forms.PictureBox picturebox)
         { //metoda ustawiająca picturebox na odpowiednie zdjecie z repozytorium
             //input (OpponentSide lub PlayerSide, OpponentCard lub PlayerCard) kolejno
-            Card analyzedCard = card[card.Count - 1]; //przypisanie pierwszej karty z reki
+            Card analyzedCard = hand[hand.Count - 1]; //przypisanie pierwszej karty z reki
             string FaceCard = analyzedCard.GetFaceCard();
             //switch case bhy przydzielic karcie odpowiedni obrazek
             var ImageName = analyzedCard.GetFaceCard().ToString();
@@ -234,9 +244,9 @@ namespace Projekt10
             {
                 Application.Restart();
                 this.Close();
-                Environment.Exit(0 ); //bad smell code
+                Environment.Exit(0); //bad smell code
             }
-            
+
         }
         private void ActualizeLabels()
         {
