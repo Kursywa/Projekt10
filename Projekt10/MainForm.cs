@@ -185,7 +185,7 @@ namespace Projekt10
 
         private void BlackJackComparison()
         {
-            ActualizeLabels(); //słabe miejsce na metode ale chcemy sie zabezpieczyc przed
+            ActualizeLabelsBlackJack(); //słabe miejsce na metode ale chcemy sie zabezpieczyc przed
             //niewidzeniem wyniku po wygranej/przegranej
             if ((Opponentscore <= 21 && Playerscore > 21) || (Opponentscore <= 21 && Playerscore <= 21 && Opponentscore >= Playerscore))
             {
