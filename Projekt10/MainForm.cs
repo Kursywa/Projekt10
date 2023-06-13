@@ -64,6 +64,19 @@ namespace Projekt10
             OpponentNumberOfCards.Text = OpponentDeck.Count.ToString();
             PlayerNumberOfCards.Text = PlayerDeck.Count.ToString();
 
+            OpponentHand.Add(Deck.DrawCard(OpponentDeck));//dobierz z decku ooponenta
+            PlayerHand.Add(Deck.DrawCard(PlayerDeck)); //dobierz z decku gracza
+            //zliczenie wyniku (przenieść do odzielnej funkcji  zależności od gry
+            Opponentscore = OpponentHand.Sum(obj => obj.GetValue());
+            Playerscore = PlayerHand.Sum(obj => obj.GetValue());
+            //aktualizacja labelek (przenieść ją do oddzielnej funkcji dla wojny lub oczka)
+            SetCard(OpponentHand, OpponentCard); //zaktualizuj karte
+            SetCard(PlayerHand, PlayerCard); //karta
+            OpponentNumberOfCards.Text = OpponentDeck.Count.ToString(); //karty w decku
+            PlayerNumberOfCards.Text = PlayerDeck.Count.ToString(); //karty w decku
+            Opponent_label.Text = "Score: " + Opponentscore.ToString(); //wynik aktualny
+            Player_label.Text = "Score: " + Playerscore.ToString(); //wynik aktualny
+
             /* while (!endgame)            //jezeli przeniesiemy tego while do drawbtn_click to nie zawiesi sie, ale wykona tylko jeden raz
              {
                  if (DrawButtonClicked)
@@ -249,19 +262,8 @@ namespace Projekt10
         }
         private void DrawBtn_Click(object sender, EventArgs e) //przy nacisnieciu przycisku draw
         {
-            OpponentHand.Add(Deck.DrawCard(OpponentDeck));//dobierz z decku ooponenta
-            PlayerHand.Add(Deck.DrawCard(PlayerDeck)); //dobierz z decku gracza
-            //zliczenie wyniku
-            Opponentscore = OpponentHand.Sum(obj => obj.GetValue());
-            Playerscore = PlayerHand.Sum(obj => obj.GetValue());
-            //aktualizacja labelek
-            SetCard(OpponentHand, OpponentCard); //zaktualizuj karte
-            SetCard(PlayerHand, PlayerCard); //karta
-            OpponentNumberOfCards.Text = OpponentDeck.Count.ToString(); //karty w decku
-            PlayerNumberOfCards.Text = PlayerDeck.Count.ToString(); //karty w decku
-            Opponent_label.Text = "Score: " + Opponentscore.ToString(); //wynik aktualny
-            Player_label.Text = "Score: " + Playerscore.ToString(); //wynik aktualny
-            //DrawButtonClicked = true; //nie wiem po co to
+
+            DrawButtonClicked = true; 
         }
 
         private void StayBtn_Click(object sender, EventArgs e)
