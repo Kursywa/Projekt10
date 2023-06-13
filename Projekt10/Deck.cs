@@ -54,7 +54,7 @@ namespace Projekt10
             }
         }
 
-        public Card DrawCard(List<Card> deck)
+        public static Card DrawCard(List<Card> deck)
         {
             if (deck.Count > 0)
             {
