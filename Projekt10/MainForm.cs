@@ -217,14 +217,7 @@ namespace Projekt10
 
             //switch case bhy przydzielic karcie odpowiedni obrazek
             var ImageName = analyzedCard.GetFaceCard().ToString();
-            if(ImageName == "empty")
-            {
                 picturebox.Image = (Image)Properties.Resources.ResourceManager.GetObject(ImageName);
-            }
-            else
-            {
-
-            }
         }
 
         private void WinOrLoseWindow(string text)
