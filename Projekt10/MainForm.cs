@@ -44,25 +44,23 @@ namespace Projekt10
         private void InitializeWar() //implementujemy wojne tutaj
         {                      //ace>king>queen>jack>10>9>8>7>6>5>4>3>2
             PassBtn.Hide();
+            Opponent_label.Hide();
+            Player_label.Hide();
             Deck deck = new Deck();
             MainDeck = new List<Card>();
             deck.MakeDefaultDeck();
             MainDeck = deck.GetDeck();
             deck.Shuffle(MainDeck);//tosujemy karty
 
-
-
             for (int i = 0; i < 26; i++) //rozdzielenie kart miedzy graczami
             {
                 OpponentDeck.Add(Deck.DrawCard(MainDeck));
                 PlayerDeck.Add(Deck.DrawCard(MainDeck));
             }
+
             //uaktualnienie labelek decków graczy
             OpponentNumberOfCards.Text = OpponentDeck.Count.ToString();
             PlayerNumberOfCards.Text = PlayerDeck.Count.ToString();
-
-            Opponent_label.Hide();
-            Player_label.Hide();
         }
 
         private void WarComparison(Card playercard, Card opponentcard)
@@ -121,7 +119,7 @@ namespace Projekt10
                 }
             }
         }
-        private void PlayBlackjack() 
+        private void PlayBlackjack()
         {
             //metoda na dobieranie do ręki
             //dobierz z decku ooponenta
@@ -166,12 +164,12 @@ namespace Projekt10
                         MainDeck.RemoveAt(0);
                         Opponentscore += OpponentSide[OpponentSide.Count - 1].GetValue();
             */
-        
 
-                if (PlayerPass && OpponentPass) BlackJackComparison();
+
+            if (PlayerPass && OpponentPass) BlackJackComparison();
 
         }
-        
+
 
         private void BlackJackComparison()
         {
@@ -191,9 +189,8 @@ namespace Projekt10
             //po klinkięciu "start" egzekwowane są metody zależne od opcji:
             //blackjack albo war game
 
-            //groupBox1.Hide();
+            groupBox1.Hide();
             DrawBtn.Show();
-            StopBtn.Show();
             if (BlackjackRadioBtn.Checked) InitilizeBlackjack();
             if (WarRadioBtn.Checked) InitializeWar();
         }
@@ -240,7 +237,7 @@ namespace Projekt10
                     WarComparison(PlayerHand[PlayerHand.Count - 1], OpponentHand[OpponentHand.Count - 1]);
                 }
             }
-            if(BlackjackRadioBtn.Checked) PlayBlackjack();
+            if (BlackjackRadioBtn.Checked) PlayBlackjack();
         }
 
         private void StayBtn_Click(object sender, EventArgs e)

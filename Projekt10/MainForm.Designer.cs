@@ -33,15 +33,13 @@
             StartBtn = new Button();
             BlackjackRadioBtn = new RadioButton();
             DrawBtn = new Button();
-            StopBtn = new Button();
             PassBtn = new Button();
-            Opponent_label = new Label();
-            Player_label = new Label();
             OpponentDeckPictureBox = new PictureBox();
             PlayerDeckPictureBox = new PictureBox();
             OpponentCard = new PictureBox();
             PlayerCard = new PictureBox();
-            textBox1 = new TextBox();
+            Opponent_label = new Label();
+            Player_label = new Label();
             OpponentNumberOfCards = new Label();
             PlayerNumberOfCards = new Label();
             groupBox1.SuspendLayout();
@@ -111,18 +109,6 @@
             DrawBtn.Visible = false;
             DrawBtn.Click += DrawBtn_Click;
             // 
-            // StopBtn
-            // 
-            StopBtn.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            StopBtn.Location = new Point(627, 379);
-            StopBtn.Name = "StopBtn";
-            StopBtn.Size = new Size(131, 49);
-            StopBtn.TabIndex = 3;
-            StopBtn.Text = "STOP";
-            StopBtn.UseVisualStyleBackColor = true;
-            StopBtn.Visible = false;
-            StopBtn.Click += StopBtn_Click;
-            // 
             // PassBtn
             // 
             PassBtn.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
@@ -134,27 +120,6 @@
             PassBtn.UseVisualStyleBackColor = true;
             PassBtn.Visible = false;
             PassBtn.Click += StayBtn_Click;
-            // 
-            // Opponent_label
-            // 
-            Opponent_label.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            Opponent_label.AutoSize = true;
-            Opponent_label.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            Opponent_label.Location = new Point(249, 39);
-            Opponent_label.Name = "Opponent_label";
-            Opponent_label.Size = new Size(152, 28);
-            Opponent_label.TabIndex = 6;
-            Opponent_label.Text = "Opponent_label";
-            // 
-            // Player_label
-            // 
-            Player_label.AutoSize = true;
-            Player_label.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            Player_label.Location = new Point(249, 280);
-            Player_label.Name = "Player_label";
-            Player_label.Size = new Size(115, 28);
-            Player_label.TabIndex = 7;
-            Player_label.Text = "Player_label";
             // 
             // OpponentDeckPictureBox
             // 
@@ -200,31 +165,44 @@
             PlayerCard.TabIndex = 13;
             PlayerCard.TabStop = false;
             // 
-            // textBox1
+            // Opponent_label
             // 
-            textBox1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            textBox1.Location = new Point(12, 206);
-            textBox1.Multiline = true;
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(90, 60);
-            textBox1.TabIndex = 15;
-            textBox1.Text = "Number of cards";
+            Opponent_label.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            Opponent_label.AutoSize = true;
+            Opponent_label.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            Opponent_label.Location = new Point(249, 39);
+            Opponent_label.Name = "Opponent_label";
+            Opponent_label.Size = new Size(152, 28);
+            Opponent_label.TabIndex = 6;
+            Opponent_label.Text = "Opponent_label";
+            // 
+            // Player_label
+            // 
+            Player_label.AutoSize = true;
+            Player_label.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            Player_label.Location = new Point(249, 280);
+            Player_label.Name = "Player_label";
+            Player_label.Size = new Size(115, 28);
+            Player_label.TabIndex = 7;
+            Player_label.Text = "Player_label";
             // 
             // OpponentNumberOfCards
             // 
             OpponentNumberOfCards.AutoSize = true;
-            OpponentNumberOfCards.Location = new Point(142, 169);
+            OpponentNumberOfCards.Location = new Point(547, 122);
             OpponentNumberOfCards.Name = "OpponentNumberOfCards";
-            OpponentNumberOfCards.Size = new Size(0, 20);
+            OpponentNumberOfCards.Size = new Size(18, 20);
             OpponentNumberOfCards.TabIndex = 16;
+            OpponentNumberOfCards.Text = "o";
             // 
             // PlayerNumberOfCards
             // 
             PlayerNumberOfCards.AutoSize = true;
-            PlayerNumberOfCards.Location = new Point(140, 282);
+            PlayerNumberOfCards.Location = new Point(547, 364);
             PlayerNumberOfCards.Name = "PlayerNumberOfCards";
-            PlayerNumberOfCards.Size = new Size(0, 20);
+            PlayerNumberOfCards.Size = new Size(18, 20);
             PlayerNumberOfCards.TabIndex = 17;
+            PlayerNumberOfCards.Text = "p";
             // 
             // MainForm
             // 
@@ -233,7 +211,6 @@
             ClientSize = new Size(800, 451);
             Controls.Add(PlayerNumberOfCards);
             Controls.Add(OpponentNumberOfCards);
-            Controls.Add(textBox1);
             Controls.Add(PlayerCard);
             Controls.Add(OpponentCard);
             Controls.Add(PlayerDeckPictureBox);
@@ -241,7 +218,6 @@
             Controls.Add(Player_label);
             Controls.Add(Opponent_label);
             Controls.Add(PassBtn);
-            Controls.Add(StopBtn);
             Controls.Add(DrawBtn);
             Controls.Add(groupBox1);
             Name = "MainForm";
@@ -264,15 +240,13 @@
         private RadioButton BlackjackRadioBtn;
         private Button StartBtn;
         private Button DrawBtn;
-        private Button StopBtn;
         private Button PassBtn;
-        private Label Opponent_label;
-        private Label Player_label;
         private PictureBox OpponentDeckPictureBox;
         private PictureBox PlayerDeckPictureBox;
         private PictureBox OpponentCard;
         private PictureBox PlayerCard;
-        private TextBox textBox1;
+        private Label Opponent_label;
+        private Label Player_label;
         private Label OpponentNumberOfCards;
         private Label PlayerNumberOfCards;
     }
