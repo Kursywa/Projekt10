@@ -159,7 +159,7 @@ namespace Projekt10
             PlayerHand.Add(Deck.DrawCard(MainDeck)); //dobierz z decku gracza
             Playerscore = PlayerHand.Sum(obj => obj.GetValue());
             if(Playerscore >21) BlackJackComparison();
-            ActualizeLabels(); //odswiez wynik
+            ActualizeLabelsBlackJack(); //odswiez wynik
             //tura przeciwnika
             if ((Playerscore > Opponentscore) && Opponentscore < 18)
             {
@@ -171,7 +171,7 @@ namespace Projekt10
             {
                 OpponentPass = true;
             }
-            ActualizeLabels(); //odswiez wynik
+            ActualizeLabelsBlackJack(); //odswiez wynik
             if (PlayerPass && OpponentPass) BlackJackComparison();
 
         }
@@ -255,8 +255,6 @@ namespace Projekt10
             SetCard(PlayerHand, PlayerCard); //karta
             OpponentNumberOfCards.Text = OpponentDeck.Count.ToString(); //karty w decku
             PlayerNumberOfCards.Text = PlayerDeck.Count.ToString(); //karty w decku
-            Opponent_label.Text = "Score: " + Opponentscore.ToString(); //wynik aktualny
-            Player_label.Text = "Score: " + Playerscore.ToString(); //wynik aktualny
         }
     }
 }
