@@ -27,6 +27,7 @@ namespace Projekt10
         List<Card> MainDeck = new List<Card>();
         bool OpponentPass = false;
         bool PlayerPass = false;
+        PictureBox ChildCardPictureBox = new PictureBox();
         public MainForm()
         {
             InitializeComponent();
@@ -201,11 +202,19 @@ namespace Projekt10
         private void SetCard(List<Card> hand, System.Windows.Forms.PictureBox picturebox)
         { //metoda ustawiająca picturebox na odpowiednie zdjecie z repozytorium
             //input (OpponentSide lub PlayerSide, OpponentCard lub PlayerCard) kolejno
-            Card analyzedCard = hand[hand.Count - 1]; //przypisanie pierwszej karty z reki
+            Card analyzedCard = hand[hand.Count - 1]; //przypisanie ostatniej karty z reki
             string FaceCard = analyzedCard.GetFaceCard();
+
             //switch case bhy przydzielic karcie odpowiedni obrazek
             var ImageName = analyzedCard.GetFaceCard().ToString();
-            picturebox.Image = (Image)Properties.Resources.ResourceManager.GetObject(ImageName);
+            if(ImageName == "empty")
+            {
+                picturebox.Image = (Image)Properties.Resources.ResourceManager.GetObject(ImageName);
+            }
+            else
+            {
+
+            }
         }
 
         private void WinOrLoseWindow(string text)
